@@ -46,7 +46,7 @@ def render_breadcrumbs(context):
         try:
             url = reverse(viewname=viewname, args=args)
         except NoReverseMatch:
-            url = viename
+            url = viewname
         links.append((url, _(label)))
 
     if not links:
