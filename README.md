@@ -20,12 +20,12 @@ Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:
     viewname - Any string that can be resolved into view url with django reverse() function.
     args - Optional arguments to django's reverse() function.
 
-    viename will be resolved into url using django reverse() function using:
+viename will be resolved into url using django reverse() function using:
 
-        url = resolve(viename, args=args)
+    url = resolve(viename, args=args)
 
-    If viename cannot be resolved using reverse() than it will be rendered as is, so that static
-    url's can be used in {% breadcrumb %} template tags.
+If viename cannot be resolved using reverse() than it will be rendered as is, so that static
+url's can be used in {% breadcrumb %} template tags.
 
 Use {% render_breadcrumbs %} to render all breadcrumbs links to html.
 
