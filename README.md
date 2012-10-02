@@ -26,6 +26,8 @@ Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:
 
     If viename cannot be resolved using reverse() than it will be rendered as is, so that static url's can be used in {% breadcrumb %} template tags.
 
+Use {% render_breadcrumbs %} to render all breadcrumbs links to html.
+
 Example
 =======
 
