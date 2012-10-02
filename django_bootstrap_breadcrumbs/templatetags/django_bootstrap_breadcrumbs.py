@@ -5,7 +5,7 @@
 """
 
 
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django import template
@@ -43,7 +43,10 @@ def render_breadcrumbs(context):
     links = []
     for (label, viewname, args) in context['request'].META.get(
         CONTEXT_KEY, []):
-        url = reverse(viewname=viewname, args=args)
+        try:
+            url = reverse(viewname=viewname, args=args)
+        except NoReverseMatch:
+            url = viename
         links.append((url, _(label)))
 
     if not links:
