@@ -14,29 +14,30 @@ Add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.
 
 base.html:
 
-  {% django_bootstrap_breadcrumbs %}
+    {% django_bootstrap_breadcrumbs %}
 
-  {% block breadcrumbs %}
-      {% breadcrumb "Home" "site_index" %}
-  {% endblock %}
+    {% block breadcrumbs %}
+        {% breadcrumb "Home" "site_index" %}
+    {% endblock %}
 
-  {% block content %}
-      {% render_breadcrumbs %}
-  {% endblock %}
+    {% block content %}
+        {% render_breadcrumbs %}
+    {% endblock %}
 
 users.html:
 
-  {% django_bootstrap_breadcrumbs %}
+    {% django_bootstrap_breadcrumbs %}
 
-  {% block breadcrumbs %}
-      {{ block.super }}
-      {% breadcrumb "Users" "users.views.index" %}
-  {% endblock %}
+    {% block breadcrumbs %}
+        {{ block.super }}
+        {% breadcrumb "Users" "users.views.index" %}
+    {% endblock %}
 
-profile.html
-  {% django_bootstrap_breadcrumbs %}
+profile.html:
 
-  {% block breadcrumbs %}
-      {{ block.super }}
-      {% breadcrumb "User profile" "users.views.profile" user.username %}
-  {% endblock %}
+    {% django_bootstrap_breadcrumbs %}
+
+    {% block breadcrumbs %}
+        {{ block.super }}
+        {% breadcrumb "User profile" "users.views.profile" user.username %}
+    {% endblock %}
