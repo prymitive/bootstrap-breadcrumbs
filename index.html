@@ -47,7 +47,7 @@
 
 <pre><code>{% breadcrum $label $viewname [*args] %}
 
-label - Breadcrum link text.
+label - Breadcrumb link text.
 viewname - Any string that can be resolved into view url with django reverse() function.
 args - Optional arguments to django's reverse() function.
 </code></pre>
@@ -60,7 +60,8 @@ args - Optional arguments to django's reverse() function.
 <p>If viename cannot be resolved using reverse() than it will be rendered as is, so that static
 url's can be used in {% breadcrumb %} template tags.</p>
 
-<p>Use {% render_breadcrumbs %} to render all breadcrumbs links to html.</p>
+<p>Finally use {% render_breadcrumbs %} to render all breadcrumbs links to html.
+Remeber to use tags inside {% block %}.</p>
 
 <h1>Example</h1>
 
@@ -80,7 +81,9 @@ url's can be used in {% breadcrumb %} template tags.</p>
 
 <p>users.html:</p>
 
-<pre><code>{% django_bootstrap_breadcrumbs %}
+<pre><code>{% extends "base.html" %}
+
+{% django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
@@ -90,7 +93,9 @@ url's can be used in {% breadcrumb %} template tags.</p>
 
 <p>profile.html:</p>
 
-<pre><code>{% django_bootstrap_breadcrumbs %}
+<pre><code>{% extends "users.html" %}
+
+{% django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
