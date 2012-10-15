@@ -19,7 +19,7 @@ setup(
     author_email='l.mierzwa@gmail.com',
     packages=find_packages(),
     classifiers=[
-        'License :: OSI Approved :: GNU General Public License v3',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules',
