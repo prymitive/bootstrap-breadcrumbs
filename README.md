@@ -5,7 +5,8 @@ Django template tags used to generate breadcrumbs html using twitter bootstrap c
 
 Requirements:
 
-  * Twitter Bootstrap 2 (written with 2.1)
+  * django (tested with 1.4.1)
+  * Twitter Bootstrap 2 (tested with 2.1)
 
 Usage
 =====
