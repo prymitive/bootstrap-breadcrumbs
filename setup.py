@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='bootstrap_breadcrumbs',
+    name='django_bootstrap_breadcrumbs',
     version='0.1',
     license='GPLv3',
     description='Django breadcrumbs using Twitter Bootstrap V2',
