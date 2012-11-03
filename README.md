@@ -36,7 +36,7 @@ Example
 
 base.html:
 
-    {% django_bootstrap_breadcrumbs %}
+    {% load django_bootstrap_breadcrumbs %}
 
     {% block breadcrumbs %}
         {% breadcrumb "Home" "/" %}
@@ -51,7 +51,7 @@ users.html:
 
     {% extends "base.html" %}
 
-    {% django_bootstrap_breadcrumbs %}
+    {% load django_bootstrap_breadcrumbs %}
 
     {% block breadcrumbs %}
         {{ block.super }}
@@ -62,9 +62,13 @@ profile.html:
 
     {% extends "users.html" %}
 
-    {% django_bootstrap_breadcrumbs %}
+    {% load django_bootstrap_breadcrumbs %}
 
     {% block breadcrumbs %}
         {{ block.super }}
         {% breadcrumb user.get_full_name "users.views.profile" user.username %}
     {% endblock %}
+
+Result:
+
+    Home / Users and groups / Users / John Doe
