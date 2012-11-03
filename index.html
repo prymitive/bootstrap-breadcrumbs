@@ -38,7 +38,8 @@
 <p>Requirements:</p>
 
 <ul>
-<li>Twitter Bootstrap 2 (written with 2.1)</li>
+<li>django (tested with 1.4.1)</li>
+<li>Twitter Bootstrap 2 (tested with 2.1)</li>
 </ul><h1>Usage</h1>
 
 <p>Add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.</p>
@@ -67,7 +68,7 @@ Remeber to use tags inside {% block %}.</p>
 
 <p>base.html:</p>
 
-<pre><code>{% django_bootstrap_breadcrumbs %}
+<pre><code>{% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {% breadcrumb "Home" "/" %}
@@ -83,7 +84,7 @@ Remeber to use tags inside {% block %}.</p>
 
 <pre><code>{% extends "base.html" %}
 
-{% django_bootstrap_breadcrumbs %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
@@ -95,12 +96,17 @@ Remeber to use tags inside {% block %}.</p>
 
 <pre><code>{% extends "users.html" %}
 
-{% django_bootstrap_breadcrumbs %}
+{% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
     {% breadcrumb user.get_full_name "users.views.profile" user.username %}
 {% endblock %}
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>Home / Users and groups / Users / John Doe
 </code></pre>
         </section>
 
