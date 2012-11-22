@@ -62,6 +62,7 @@ def render_breadcrumbs(context):
             ret += ' <span class="divider">/</span>'
         else:
             ret += label
+        ret += '</li>'
         i += 1
     ret += '</ul>'
     return mark_safe(ret)
