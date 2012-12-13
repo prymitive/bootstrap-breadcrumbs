@@ -15,7 +15,7 @@ Add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.
 
 Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:
 
-    {% breadcrum $label $viewname [*args] %}
+    {% breadcrumb $label $viewname [*args] %}
 
     label - Breadcrumb link text.
     viewname - Any string that can be resolved into view url with django reverse() function.
