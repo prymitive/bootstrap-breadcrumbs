@@ -53,12 +53,12 @@ viewname - Any string that can be resolved into view url with django reverse() f
 args - Optional arguments to django's reverse() function.
 </code></pre>
 
-<p>viename will be resolved into url using django reverse() function using:</p>
+<p>viewname will be resolved into url using django reverse() function using:</p>
 
-<pre><code>url = resolve(viename, args=args)
+<pre><code>url = resolve(viewname, args=args)
 </code></pre>
 
-<p>If viename cannot be resolved using reverse() than it will be rendered as is, so that static
+<p>If viewname cannot be resolved using reverse() than it will be rendered as is, so that static
 url's can be used in {% breadcrumb %} template tags.</p>
 
 <p>Finally use {% render_breadcrumbs %} to render all breadcrumbs links to html.
