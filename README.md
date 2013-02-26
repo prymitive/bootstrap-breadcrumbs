@@ -66,9 +66,26 @@ profile.html:
 
     {% block breadcrumbs %}
         {{ block.super }}
-        {% breadcrumb user.get_full_name "users.views.profile" user.username %}
+        {% breadcrumb user "users.views.profile" user.username %}
     {% endblock %}
 
 Result:
 
     Home / Users and groups / Users / John Doe
+
+It's also possible to use properties.
+
+profile.html:
+
+    {% extends "users.html" %}
+
+    {% load django_bootstrap_breadcrumbs %}
+
+    {% block breadcrumbs %}
+        {{ block.super }}
+        {% breadcrumb user.email "users.views.profile" user.username %}
+    {% endblock %}
+
+Result:
+
+    Home / Users and groups / Users / john.doe@example.org
