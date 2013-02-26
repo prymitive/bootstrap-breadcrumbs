@@ -54,8 +54,7 @@ def render_breadcrumbs(context):
 
     ret = '<ul class="breadcrumb">'
     total = len(links)
-    i = 1
-    for (url, label) in links:
+    for (i, (url, label)) in enumerate(links, 1):
         ret += '<li>'
         if total > 1 and i < total:
             ret += '<a href="%s">%s</a>' % (url, label)
@@ -63,7 +62,6 @@ def render_breadcrumbs(context):
         else:
             ret += label
         ret += '</li>'
-        i += 1
     ret += '</ul>'
     return mark_safe(ret)
 
