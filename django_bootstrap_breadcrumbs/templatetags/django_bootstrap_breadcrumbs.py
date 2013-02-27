@@ -5,9 +5,12 @@
 """
 
 
+from inspect import ismethod
+
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.db.models import Model
 from django import template
 
 
@@ -27,8 +30,9 @@ def breadcrumb(context, label, viewname, *args):
     Remember to use it inside {% block %} with {{ block.super }} to get all
     parent breadcrumbs.
 
-    :param label: Breadcrumb link label
-    :param viewname: Name of the view to link this breadcrumb to.
+    :param label: Breadcrumb link label.
+    :param viewname: Name of the view to link this breadcrumb to, or Model
+                     instance with implemented get_absolute_url().
     :param args: Any arguments to view function.
     """
     context['request'].META[CONTEXT_KEY] = context['request'].META.get(
@@ -42,11 +46,16 @@ def render_breadcrumbs(context):
     """
     links = []
     for (label, viewname, args) in context['request'].META.get(
-        CONTEXT_KEY, []):
-        try:
-            url = reverse(viewname=viewname, args=args)
-        except NoReverseMatch:
-            url = viewname
+            CONTEXT_KEY, []):
+        if isinstance(viewname, Model) and hasattr(
+                viewname, 'get_absolute_url') and ismethod(
+                viewname.get_absolute_url):
+            url = viewname.get_absolute_url()
+        else:
+            try:
+                url = reverse(viewname=viewname, args=args)
+            except NoReverseMatch:
+                url = viewname
         links.append((url, _(unicode(label)) if label else label))
 
     if not links:
