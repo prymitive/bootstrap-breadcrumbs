@@ -18,7 +18,7 @@ Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:
     {% breadcrumb $label $viewname [*args] %}
 
     label - Breadcrumb link text.
-    viewname - Any string that can be resolved into view url with django reverse() function.
+    viewname - Any string that can be resolved into view url with django reverse() function or django Model instance with implemented get_absolute_url() method.
     args - Optional arguments to django's reverse() function.
 
 viewname will be resolved into url using django reverse() function using:
