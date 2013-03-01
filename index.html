@@ -49,7 +49,7 @@
 <pre><code>{% breadcrumb $label $viewname [*args] %}
 
 label - Breadcrumb link text.
-viewname - Any string that can be resolved into view url with django reverse() function.
+viewname - Any string that can be resolved into view url with django reverse() function or django Model instance with implemented get_absolute_url() method.
 args - Optional arguments to django's reverse() function.
 </code></pre>
 
@@ -100,13 +100,32 @@ Remeber to use tags inside {% block %}.</p>
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb user.get_full_name "users.views.profile" user.username %}
+    {% breadcrumb user "users.views.profile" user.username %}
 {% endblock %}
 </code></pre>
 
 <p>Result:</p>
 
 <pre><code>Home / Users and groups / Users / John Doe
+</code></pre>
+
+<p>It's also possible to use properties.</p>
+
+<p>profile.html:</p>
+
+<pre><code>{% extends "users.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb user.email "users.views.profile" user.username %}
+{% endblock %}
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>Home / Users and groups / Users / john.doe@example.org
 </code></pre>
         </section>
 
