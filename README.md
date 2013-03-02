@@ -15,10 +15,13 @@ Just install it using pip:
 
     pip install django-bootstrap-breadcrumbs
 
+After that make necessary changes to Django settings:
+
+  * add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.
+  * make sure that TEMPLATE_CONTEXT_PROCESSORS contains "django.core.context_processors.request".
+
 Usage
 =====
-
-Add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.
 
 Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:
 
