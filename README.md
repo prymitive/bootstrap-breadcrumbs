@@ -8,6 +8,13 @@ Requirements:
   * django (tested with 1.4.1)
   * Twitter Bootstrap 2 (tested with 2.1)
 
+Installation
+============
+
+Just install it using pip:
+
+    pip install django-bootstrap-breadcrumbs
+
 Usage
 =====
 
