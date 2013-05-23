@@ -8,6 +8,7 @@
 from inspect import ismethod
 
 from django.core.urlresolvers import reverse, NoReverseMatch
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.db.models import Model
@@ -36,7 +37,7 @@ def breadcrumb(context, label, viewname, *args):
     :param args: Any arguments to view function.
     """
     context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-        CONTEXT_KEY, []) + [(label, viewname, args)]
+        CONTEXT_KEY, []) + [(escape(label), viewname, args)]
     return ''
 
 
