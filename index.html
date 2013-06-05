@@ -31,7 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>bootstrap-breadcrumbs</h1>
+        <h1>
+<a name="bootstrap-breadcrumbs" class="anchor" href="#bootstrap-breadcrumbs"><span class="octicon octicon-link"></span></a>bootstrap-breadcrumbs</h1>
 
 <p>Django template tags used to generate breadcrumbs html using twitter bootstrap css classes.</p>
 
@@ -40,7 +41,8 @@
 <ul>
 <li>django (tested with 1.4.1)</li>
 <li>Twitter Bootstrap 2 (tested with 2.1)</li>
-</ul><h1>Installation</h1>
+</ul><h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>Just install it using pip:</p>
 
@@ -52,7 +54,8 @@
 <ul>
 <li>add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.</li>
 <li>make sure that TEMPLATE_CONTEXT_PROCESSORS contains "django.core.context_processors.request".</li>
-</ul><h1>Usage</h1>
+</ul><h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
 
 <p>Use {% breadcrumb %} template tag to append all breadcrumbs links, syntax:</p>
 
@@ -71,10 +74,13 @@ args - Optional arguments to django's reverse() function.
 <p>If viewname cannot be resolved using reverse() than it will be rendered as is, so that static
 url's can be used in {% breadcrumb %} template tags.</p>
 
+<p>Note that label is escaped by default, so all HTML tags will be replaced. If this is not the desired behaviour use breadcrumb_safe version, it works just like breadcrumb but it doesn't do any escaping.</p>
+
 <p>Finally use {% render_breadcrumbs %} to render all breadcrumbs links to html.
 Remeber to use tags inside {% block %}.</p>
 
-<h1>Example</h1>
+<h1>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h1>
 
 <p>base.html:</p>
 
@@ -137,6 +143,13 @@ Remeber to use tags inside {% block %}.</p>
 
 <pre><code>Home / Users and groups / Users / john.doe@example.org
 </code></pre>
+
+<h1>
+<a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h1>
+
+<ul>
+<li>0.3.2 - added breadcrumb_safe tag</li>
+</ul>
       </section>
     </div>
 
