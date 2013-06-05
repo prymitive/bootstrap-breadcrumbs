@@ -46,7 +46,7 @@ def breadcrumb_safe(context, label, viewname, *args):
     Same as breadcrumb but label is not escaped.
     """
     context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-        CONTEXT_KEY, []) + [label, viewname, args)]
+        CONTEXT_KEY, []) + [(label, viewname, args)]
     return ''
 
 
