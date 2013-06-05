@@ -105,4 +105,5 @@ Result:
 Changelog
 =========
 
+* 0.3.3 - fixed typo in 0.3.2
 * 0.3.2 - added breadcrumb_safe tag
