@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django_bootstrap_breadcrumbs',
-    version='0.3.1',
+    version='0.3.2',
     url='http://prymitive.github.com/bootstrap-breadcrumbs',
     license='GPLv3',
     description='Django breadcrumbs using Twitter Bootstrap V2',

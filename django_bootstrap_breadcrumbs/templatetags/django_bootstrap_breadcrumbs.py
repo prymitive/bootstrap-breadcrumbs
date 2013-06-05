@@ -41,6 +41,15 @@ def breadcrumb(context, label, viewname, *args):
     return ''
 
 
+def breadcrumb_safe(context, label, viewname, *args):
+    """
+    Same as breadcrumb but label is not escaped.
+    """
+    context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+        CONTEXT_KEY, []) + [label, viewname, args)]
+    return ''
+
+
 def render_breadcrumbs(context):
     """
     Render breadcrumbs html using twitter bootstrap css classes.
@@ -77,4 +86,5 @@ def render_breadcrumbs(context):
 
 
 register.simple_tag(takes_context=True)(breadcrumb)
+register.simple_tag(takes_context=True)(breadcrumb_safe)
 register.simple_tag(takes_context=True)(render_breadcrumbs)
