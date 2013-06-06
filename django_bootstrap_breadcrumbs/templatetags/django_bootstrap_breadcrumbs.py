@@ -85,6 +85,44 @@ def render_breadcrumbs(context):
     return mark_safe(ret)
 
 
+class BreadcrumbNode(template.Node):
+
+    def __init__(self, nodelist, viewname, args):
+        self.nodelist = nodelist
+        self.viewname = viewname
+        self.args = args
+
+    def render(self, context):
+        label = self.nodelist.render(context)
+        try:
+            viewname = template.Variable(self.viewname).resolve(context)
+        except template.VariableDoesNotExist:
+            viewname = self.viewname
+        args = self.parse_args(context)
+        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+            CONTEXT_KEY, []) + [(label, viewname, args)]
+        return ''
+
+    def parse_args(self, context):
+        args = []
+        for arg in self.args:
+            try:
+                value = template.Variable(arg).resolve(context)
+            except template.VariableDoesNotExist:
+                value = arg
+            args.append(value)
+        return args
+
+
+def breadcrumb_for(parser, token):
+    bits = list(token.split_contents())
+    end_tag = 'end' + bits[0]
+    nodelist = parser.parse((end_tag,))
+    parser.delete_first_token()
+    return BreadcrumbNode(nodelist, bits[1], bits[2:])
+
+
 register.simple_tag(takes_context=True)(breadcrumb)
 register.simple_tag(takes_context=True)(breadcrumb_safe)
 register.simple_tag(takes_context=True)(render_breadcrumbs)
+register.tag( 'breadcrumb_for', breadcrumb_for)

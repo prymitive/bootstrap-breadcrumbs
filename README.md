@@ -38,7 +38,28 @@ viewname will be resolved into url using django reverse() function using:
 If viewname cannot be resolved using reverse() than it will be rendered as is, so that static
 url's can be used in {% breadcrumb %} template tags.
 
-Note that label is escaped by default, so all HTML tags will be replaced. If this is not the desired behaviour use breadcrumb_safe version, it works just like breadcrumb but it doesn't do any escaping.
+Note that label is escaped by default, so all HTML tags will be replaced.
+If this is not the desired behaviour use {% breadcrumb_safe %} version, it works just like {% breadcrumb %} but it doesn't do any escaping.
+
+Starting with 0.4.0 there is also {% breadcrumb_for %} block tag, usage:
+
+    {% breadcrumb_for $viewname [*args] %}
+        $label
+    {% endbreadcrumb_for %}
+
+As {% breadcrumb_for %} is a block tag, you can put any code there, it won't be escaped in any way.
+
+Examples:
+
+    {% breadcrumb_for site_index %}
+        <i class='icon-home'></i>
+        {% trans "Home" %}
+    {% endbreadcrumb_for %}
+
+    {% breadcrumb_for user_profile user.username %}
+        <i class='icon-user'></i>
+        {{ user.username }}
+    {% endbreadcrumb_for %}
 
 Finally use {% render_breadcrumbs %} to render all breadcrumbs links to html.
 Remeber to use tags inside {% block %}.
