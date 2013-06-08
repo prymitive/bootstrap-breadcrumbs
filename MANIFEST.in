@@ -1,0 +1,1 @@
+recursive-include django_bootstrap_breadcrumbs/templates *

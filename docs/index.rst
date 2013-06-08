@@ -197,6 +197,7 @@ Result::
 Changelog
 =========
 
+* 0.5.1 - added missing template to the package
 * 0.5.0 - HTML rendering was moved to template with possibility to use custom templates
 * 0.4.0 - added breadcrumb_for block tag
 * 0.3.3 - fixed typo in 0.3.2
