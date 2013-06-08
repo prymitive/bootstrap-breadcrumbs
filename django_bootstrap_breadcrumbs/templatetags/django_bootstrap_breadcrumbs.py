@@ -50,12 +50,17 @@ def breadcrumb_safe(context, label, viewname, *args):
     return ''
 
 
-def render_breadcrumbs(context):
+def render_breadcrumbs(context, *args):
     """
     Render breadcrumbs html using twitter bootstrap css classes.
     """
+    if args:
+        template_path = args[0]
+    else:
+        template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
+
     links = []
-    for (label, viewname, args) in context['request'].META.get(
+    for (label, viewname, view_args) in context['request'].META.get(
             CONTEXT_KEY, []):
         if isinstance(viewname, Model) and hasattr(
                 viewname, 'get_absolute_url') and ismethod(
@@ -63,7 +68,7 @@ def render_breadcrumbs(context):
             url = viewname.get_absolute_url()
         else:
             try:
-                url = reverse(viewname=viewname, args=args)
+                url = reverse(viewname=viewname, args=view_args)
             except NoReverseMatch:
                 url = viewname
         links.append((url, _(unicode(label)) if label else label))
@@ -71,18 +76,8 @@ def render_breadcrumbs(context):
     if not links:
         return ''
 
-    ret = '<ul class="breadcrumb">'
-    total = len(links)
-    for (i, (url, label)) in enumerate(links, 1):
-        ret += '<li>'
-        if total > 1 and i < total:
-            ret += '<a href="%s">%s</a>' % (url, label)
-            ret += ' <span class="divider">/</span>'
-        else:
-            ret += label
-        ret += '</li>'
-    ret += '</ul>'
-    return mark_safe(ret)
+    return mark_safe(template.loader.render_to_string(
+        template_path, {'breadcrumbs': links, 'breadcrumbs_total': len(links)}))
 
 
 class BreadcrumbNode(template.Node):
