@@ -203,10 +203,18 @@ Changelog
 * 0.3.3 - fixed typo in 0.3.2
 * 0.3.2 - added breadcrumb_safe tag
 
-Indices and tables
-==================
+Contributors
+============
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+Author: Łukasz Mierzwa <l.mierzwa [at] gmail>
 
+Contributors:
+
+* Ewoud Kohl van Wijngaarden
+* gnuwho
+* Christian Dullweber
+
+Bug reports
+===========
+
+Use GitHub: https://github.com/prymitive/bootstrap-breadcrumbs
