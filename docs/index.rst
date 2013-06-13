@@ -6,12 +6,25 @@
 Welcome to django-bootstrap-breadcrumbs's documentation!
 ========================================================
 
+Links
+=====
+
+Homepage: https://github.com/prymitive/bootstrap-breadcrumbs
+
+Issue tracker: https://github.com/prymitive/bootstrap-breadcrumbs/issues
+
 Installation
 ============
 
-Just install it using pip::
+Just install it using pip (recommended)::
 
     pip install django-bootstrap-breadcrumbs
+
+Or clone it from github::
+
+    git clone https://github.com/prymitive/bootstrap-breadcrumbs.git
+    cd bootstrap-breadcrumbs
+    ./setup.py install
 
 After that make necessary changes to Django settings::
 
@@ -217,4 +230,4 @@ Contributors:
 Bug reports
 ===========
 
-Use GitHub: https://github.com/prymitive/bootstrap-breadcrumbs
+Use GitHub: https://github.com/prymitive/bootstrap-breadcrumbs/issues
