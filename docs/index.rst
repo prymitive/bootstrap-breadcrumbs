@@ -226,8 +226,3 @@ Contributors:
 * Ewoud Kohl van Wijngaarden
 * gnuwho
 * Christian Dullweber
-
-Bug reports
-===========
-
-Use GitHub: https://github.com/prymitive/bootstrap-breadcrumbs/issues
