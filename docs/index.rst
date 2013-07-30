@@ -125,7 +125,7 @@ Starting with 0.5.0 it's possible to use custom template to integrate breadcrumb
 Example::
 
     {% block content %}
-        {% render_breadcrumbs "path/to/my/template.html %}
+        {% render_breadcrumbs "path/to/my/template.html" %}
     {% endblock %}
 
 Default template uses Twitter Bootstrap classes::
@@ -147,6 +147,12 @@ Default template uses Twitter Bootstrap classes::
 
 * breadcrumbs - list of breadcrumbs elements, each element contains url and label
 * breadcrumbs_total - total number of breadcrumbs elements
+
+To use Twitter Bootstrap V3 template instead of V2, use::
+
+    {% block content %}
+        {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
+    {% endblock %}
 
 Full examples
 =============
@@ -210,6 +216,7 @@ Result::
 Changelog
 =========
 
+* 0.5.2 - added bootstrap v3 template
 * 0.5.1 - added missing template to the package
 * 0.5.0 - HTML rendering was moved to template with possibility to use custom templates
 * 0.4.0 - added breadcrumb_for block tag
