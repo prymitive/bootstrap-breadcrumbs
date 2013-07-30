@@ -1,0 +1,11 @@
+<ul class="breadcrumb">
+    {% for url, label in breadcrumbs %}
+        <li{% ifequal forloop.counter breadcrumbs_total %} class="active"{% endifequal %}>
+            {% ifnotequal forloop.counter breadcrumbs_total %}
+                <a href="{{ url }}">{{ label|safe }}</a>
+            {% else %}
+                {{ label|safe }}
+            {% endifnotequal %}
+        </li>
+    {% endfor %}
+</ul>
