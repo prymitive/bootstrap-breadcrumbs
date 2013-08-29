@@ -74,7 +74,8 @@ def render_breadcrumbs(context, *args):
                 except AttributeError:
                     resolver_match = resolve(context['request'].path)
                     current_app = resolver_match.namespace
-                url = reverse(viewname=viewname, args=view_args, current_app=current_app)
+                url = reverse(viewname=viewname, args=view_args,
+                              current_app=current_app)
             except NoReverseMatch:
                 url = viewname
         links.append((url, _(unicode(label)) if label else label))
@@ -83,7 +84,8 @@ def render_breadcrumbs(context, *args):
         return ''
 
     return mark_safe(template.loader.render_to_string(
-        template_path, {'breadcrumbs': links, 'breadcrumbs_total': len(links)}))
+        template_path, {'breadcrumbs': links,
+                        'breadcrumbs_total': len(links)}))
 
 
 class BreadcrumbNode(template.Node):
@@ -126,4 +128,4 @@ def breadcrumb_for(parser, token):
 register.simple_tag(takes_context=True)(breadcrumb)
 register.simple_tag(takes_context=True)(breadcrumb_safe)
 register.simple_tag(takes_context=True)(render_breadcrumbs)
-register.tag( 'breadcrumb_for', breadcrumb_for)
+register.tag('breadcrumb_for', breadcrumb_for)

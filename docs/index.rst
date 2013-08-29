@@ -216,6 +216,7 @@ Result::
 Changelog
 =========
 
+* 0.5.3 - support for namespaced urls (edavis)
 * 0.5.2 - added bootstrap v3 template
 * 0.5.1 - added missing template to the package
 * 0.5.0 - HTML rendering was moved to template with possibility to use custom templates
@@ -233,3 +234,4 @@ Contributors:
 * Ewoud Kohl van Wijngaarden
 * gnuwho
 * Christian Dullweber
+* Eric Davis (edavis)

@@ -11,11 +11,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='django_bootstrap_breadcrumbs',
-    version='0.5.2',
+    version='0.5.3',
     url='http://prymitive.github.com/bootstrap-breadcrumbs',
     license='GPLv3',
     description='Django breadcrumbs using Twitter Bootstrap V2',
-    long_description='Django template tags used to generate breadcrumbs html using twitter bootstrap css classes or custom template',
+    long_description='Django template tags used to generate breadcrumbs html '
+                     'using twitter bootstrap css classes or custom template',
     author='Łukasz Mierzwa',
     author_email='l.mierzwa@gmail.com',
     packages=find_packages(),
