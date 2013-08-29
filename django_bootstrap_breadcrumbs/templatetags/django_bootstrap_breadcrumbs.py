@@ -7,7 +7,7 @@
 
 from inspect import ismethod
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.core.urlresolvers import reverse, resolve, NoReverseMatch
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -68,7 +68,13 @@ def render_breadcrumbs(context, *args):
             url = viewname.get_absolute_url()
         else:
             try:
-                url = reverse(viewname=viewname, args=view_args)
+                try:
+                    # 'resolver_match' introduced in Django 1.5
+                    current_app = context['request'].resolver_match.namespace
+                except AttributeError:
+                    resolver_match = resolve(context['request'].path)
+                    current_app = resolver_match.namespace
+                url = reverse(viewname=viewname, args=view_args, current_app=current_app)
             except NoReverseMatch:
                 url = viewname
         links.append((url, _(unicode(label)) if label else label))
