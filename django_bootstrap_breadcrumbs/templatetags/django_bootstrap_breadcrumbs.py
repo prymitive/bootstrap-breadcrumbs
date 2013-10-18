@@ -5,6 +5,7 @@
 """
 
 
+import logging
 from inspect import ismethod
 
 from django.core.urlresolvers import reverse, resolve, NoReverseMatch
@@ -14,6 +15,8 @@ from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django import template
 
+
+logger = logging.getLogger(__name__)
 
 register = template.Library()
 
@@ -36,8 +39,13 @@ def breadcrumb(context, label, viewname, *args):
                      instance with implemented get_absolute_url().
     :param args: Any arguments to view function.
     """
-    context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-        CONTEXT_KEY, []) + [(escape(label), viewname, args)]
+    if 'request' in context:
+        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+            CONTEXT_KEY, []) + [(escape(label), viewname, args)]
+    else:
+        logger.error("request object not found in context! Check if "
+                     "'django.core.context_processors.request' is in "
+                     "TEMPLATE_CONTEXT_PROCESSORS")
     return ''
 
 
@@ -45,8 +53,13 @@ def breadcrumb_safe(context, label, viewname, *args):
     """
     Same as breadcrumb but label is not escaped.
     """
-    context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-        CONTEXT_KEY, []) + [(label, viewname, args)]
+    if 'request' in context:
+        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+            CONTEXT_KEY, []) + [(label, viewname, args)]
+    else:
+        logger.error("request object not found in context! Check if "
+                     "'django.core.context_processors.request' is in "
+                     "TEMPLATE_CONTEXT_PROCESSORS")
     return ''
 
 
@@ -54,6 +67,12 @@ def render_breadcrumbs(context, *args):
     """
     Render breadcrumbs html using twitter bootstrap css classes.
     """
+    if not 'request' in context:
+        logger.error("request object not found in context! Check if "
+                     "'django.core.context_processors.request' is in "
+                     "TEMPLATE_CONTEXT_PROCESSORS")
+        return ''
+
     if args:
         template_path = args[0]
     else:
@@ -96,6 +115,11 @@ class BreadcrumbNode(template.Node):
         self.args = args
 
     def render(self, context):
+        if not 'request' in context:
+            logger.error("request object not found in context! Check if "
+                         "'django.core.context_processors.request' is in "
+                         "TEMPLATE_CONTEXT_PROCESSORS")
+            return ''
         label = self.nodelist.render(context)
         try:
             viewname = template.Variable(self.viewname).resolve(context)
