@@ -216,6 +216,7 @@ Result::
 Changelog
 =========
 
+* 0.5.5 - handle resolver errors so that breadcrumbs might be used in 404 or 500 template
 * 0.5.4 - warn if request object is missing from context but don't raise error
 * 0.5.3 - support for namespaced urls (edavis)
 * 0.5.2 - added bootstrap v3 template

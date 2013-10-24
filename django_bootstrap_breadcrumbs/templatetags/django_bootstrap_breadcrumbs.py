@@ -8,7 +8,8 @@
 import logging
 from inspect import ismethod
 
-from django.core.urlresolvers import reverse, resolve, NoReverseMatch
+from django.core.urlresolvers import (reverse, resolve, NoReverseMatch,
+                                      Resolver404)
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -91,8 +92,11 @@ def render_breadcrumbs(context, *args):
                     # 'resolver_match' introduced in Django 1.5
                     current_app = context['request'].resolver_match.namespace
                 except AttributeError:
-                    resolver_match = resolve(context['request'].path)
-                    current_app = resolver_match.namespace
+                    try:
+                        resolver_match = resolve(context['request'].path)
+                        current_app = resolver_match.namespace
+                    except Resolver404:
+                        current_app = None
                 url = reverse(viewname=viewname, args=view_args,
                               current_app=current_app)
             except NoReverseMatch:
