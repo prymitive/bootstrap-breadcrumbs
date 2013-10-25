@@ -153,7 +153,24 @@ def breadcrumb_for(parser, token):
     return BreadcrumbNode(nodelist, bits[1], bits[2:])
 
 
+def clear_breadcrumbs(context, *args):
+    """
+    Removes all currently added breadcrumbs.
+    """
+    if not 'request' in context:
+        logger.error("request object not found in context! Check if "
+                     "'django.core.context_processors.request' is in "
+                     "TEMPLATE_CONTEXT_PROCESSORS")
+        return ''
+
+    if CONTEXT_KEY in context['request'].META:
+        del context['request'].META[CONTEXT_KEY]
+
+    return ''
+
+
 register.simple_tag(takes_context=True)(breadcrumb)
 register.simple_tag(takes_context=True)(breadcrumb_safe)
 register.simple_tag(takes_context=True)(render_breadcrumbs)
+register.simple_tag(takes_context=True)(clear_breadcrumbs)
 register.tag('breadcrumb_for', breadcrumb_for)

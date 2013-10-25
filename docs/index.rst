@@ -154,6 +154,14 @@ To use Twitter Bootstrap V3 template instead of V2, use::
         {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
     {% endblock %}
 
+With 0.6.0 new template tag was added for clearing breadcrumbs list:
+
+    {% clear_breadcrumbs %}
+
+It can be used if we want to replace current breadcrumbs list with new.
+It's mostly useful for adding breadcrumbs to error pages, such pages are rendered after parsing all view templates, so without clearing current list we would have doubled breadcrumbs.
+It's recommended to add ``{% clear_breadcrumbs %}`` to all root breadcrumbs (home links).
+
 Full examples
 =============
 
@@ -162,6 +170,7 @@ base.html::
     {% load django_bootstrap_breadcrumbs %}
 
     {% block breadcrumbs %}
+        {% clear_breadcrumbs %}
         {% breadcrumb "Home" "/" %}
         {% breadcrumb "Users and groups" "users_and_groups_index" %}
     {% endblock %}
@@ -209,13 +218,31 @@ profile.html::
         {% breadcrumb user.email "users.views.profile" user.username %}
     {% endblock %}
 
+500.html::
+
+    {% extends "users.html" %}
+
+    {% load django_bootstrap_breadcrumbs %}
+
+    {% block breadcrumbs %}
+        {{ block.super }}
+        {% breadcrumb "Internal error" "" %}
+    {% endblock %}
+
 Result::
 
+    If everything is working:
+
     Home / Users and groups / Users / john.doe@example.org
+
+    In case of internal error:
+
+    Home / Internal error
 
 Changelog
 =========
 
+* 0.6.0 - added clear_breadcrumbs template tag
 * 0.5.5 - handle resolver errors so that breadcrumbs might be used in 404 or 500 template
 * 0.5.4 - warn if request object is missing from context but don't raise error
 * 0.5.3 - support for namespaced urls (edavis)
