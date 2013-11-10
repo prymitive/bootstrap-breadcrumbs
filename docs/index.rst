@@ -9,7 +9,9 @@ Welcome to django-bootstrap-breadcrumbs's documentation!
 Links
 =====
 
-Homepage: https://github.com/prymitive/bootstrap-breadcrumbs
+.. raw:: html
+
+   <iframe src="http://ghbtns.com/github-btn.html?user=prymitive&repo=bootstrap-breadcrumbs&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 
 Issue tracker: https://github.com/prymitive/bootstrap-breadcrumbs/issues
 
