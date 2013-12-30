@@ -5,6 +5,9 @@
 """
 
 
+from __future__ import unicode_literals
+
+import sys
 import logging
 from inspect import ismethod
 
@@ -12,6 +15,7 @@ from django.core.urlresolvers import (reverse, resolve, NoReverseMatch,
                                       Resolver404)
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django import template
@@ -101,7 +105,7 @@ def render_breadcrumbs(context, *args):
                               current_app=current_app)
             except NoReverseMatch:
                 url = viewname
-        links.append((url, _(unicode(label)) if label else label))
+        links.append((url, _(smart_text(label)) if label else label))
 
     if not links:
         return ''
