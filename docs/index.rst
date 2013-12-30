@@ -18,9 +18,9 @@ Issue tracker: https://github.com/prymitive/bootstrap-breadcrumbs/issues
 Requirements
 ============
 
-Python >=2.6 (>=3.0 supported since 0.6.1)
-Django
-Bootstrap 2.3 or 3.0
+* Python >=2.6 (>=3.0 supported since 0.6.1)
+* Django
+* Bootstrap 2.3 or 3.0
 
 Installation
 ============
