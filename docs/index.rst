@@ -15,6 +15,13 @@ Links
 
 Issue tracker: https://github.com/prymitive/bootstrap-breadcrumbs/issues
 
+Requirements
+============
+
+Python >=2.6 (>=3.0 supported since 0.6.1)
+Django
+Bootstrap 2.3 or 3.0
+
 Installation
 ============
 
@@ -244,6 +251,7 @@ Result::
 Changelog
 =========
 
+* 0.6.1 - python3 support
 * 0.6.0 - added clear_breadcrumbs template tag
 * 0.5.5 - handle resolver errors so that breadcrumbs might be used in 404 or 500 template
 * 0.5.4 - warn if request object is missing from context but don't raise error
