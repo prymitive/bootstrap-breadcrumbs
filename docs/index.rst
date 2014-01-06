@@ -251,6 +251,7 @@ Result::
 Changelog
 =========
 
+* 0.6.2 - license changed to MIT
 * 0.6.1 - python3 support
 * 0.6.0 - added clear_breadcrumbs template tag
 * 0.5.5 - handle resolver errors so that breadcrumbs might be used in 404 or 500 template
