@@ -7,7 +7,6 @@
 
 from __future__ import unicode_literals
 
-import sys
 import logging
 from inspect import ismethod
 

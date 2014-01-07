@@ -13,7 +13,7 @@
 
 from __future__ import unicode_literals
 
-import sys, os
+import os
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
