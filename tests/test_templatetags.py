@@ -201,6 +201,14 @@ class SiteTests(TestCase):
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
 
+    def test_render_ns_app(self):
+        self.context['request'].path = '/login'
+        t = Template(T_LOAD + T_BLOCK_NS + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
+        self.assertTrue('<span class="divider">/</span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
+
     def test_render_escape(self):
         t = Template(T_LOAD + T_BLOCK_ESCAPE + T_BLOCK_RENDER)
         resp = t.render(self.context)
