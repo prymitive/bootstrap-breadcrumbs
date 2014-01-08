@@ -80,7 +80,7 @@ T_BLOCK_FOR = '''
 T_BLOCK_FOR_VAR = '''
 {% block breadcrumbs %}
 {% breadcrumb_for nonexisting %}404{% endbreadcrumb_for %}
-{% breadcrumb_for login_args_url actor.name %}Login Actor{% endbreadcrumb_for %}
+{% breadcrumb_for login_args_url actor.name %}Login Act{% endbreadcrumb_for %}
 {% breadcrumb_for login_args_url dummyarg %}Login Actor{% endbreadcrumb_for %}
 {% breadcrumb "Home" "/" %}
 {% endblock %}
@@ -190,7 +190,7 @@ class SiteTests(TestCase):
         t = Template(T_LOAD + T_BLOCK_FOR_VAR + T_BLOCK_RENDER)
         resp = t.render(self.context)
         self.assertTrue('<a href="nonexisting">404</a>' in resp)
-        self.assertTrue('<a href="/login/Actor">Login Actor</a>' in resp)
+        self.assertTrue('<a href="/login/Actor">Login Act</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 4)
 
