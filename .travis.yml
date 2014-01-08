@@ -14,4 +14,5 @@ script:
   - coverage run --rcfile=.coveragerc `which py.test` -v --pep8
 
 after_success:
+  - coverage report -m
   - coveralls
