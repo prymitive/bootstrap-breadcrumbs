@@ -63,6 +63,14 @@ T_BLOCK_NS = '''
 {% endblock %}
 '''
 
+T_BLOCK_NS_FOR = '''
+{% block breadcrumbs %}
+{% breadcrumb_for "/static" %}<span>Static</span>{% endbreadcrumb_for %}
+{% breadcrumb_for "ns:login2_url" %}Login2{% endbreadcrumb_for %}
+{% breadcrumb_for "/john" %}John{% endbreadcrumb_for %}
+{% endblock %}
+'''
+
 T_BLOCK_ESCAPE = '''
 {% block breadcrumbs %}
 {% breadcrumb "Home" "/" %}
@@ -208,6 +216,15 @@ class SiteTests(TestCase):
         self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
+
+    def test_render_ns_breadcrumb_for(self):
+        t = Template(T_LOAD + T_BLOCK_NS_FOR + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        print(resp)
+        self.assertTrue('<a href="/static"><span>Static</span></a>' in resp)
+        self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
+        self.assertTrue('<span class="divider">/</span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 3)
 
     def test_render_escape(self):
         t = Template(T_LOAD + T_BLOCK_ESCAPE + T_BLOCK_RENDER)
