@@ -92,7 +92,8 @@ def render_breadcrumbs(context, *args):
         else:
             try:
                 try:
-                    current_app = context.current_app
+                    # 'resolver_match' introduced in Django 1.5
+                    current_app = context['request'].resolver_match.namespace
                 except AttributeError:
                     try:
                         resolver_match = resolve(context['request'].path)
