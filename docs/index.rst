@@ -129,7 +129,7 @@ Example::
         {% render_breadcrumbs %}
     {% endblock %}
 
-Starting with 0.5.0 it's possible to use custom template to integrate breadcrumbs with frameworks other than Twitter Bootstrap.
+Starting with 0.5.0 it's possible to use custom template to integrate breadcrumbs with frameworks other than Bootstrap.
 
 Example::
 
@@ -137,7 +137,7 @@ Example::
         {% render_breadcrumbs "path/to/my/template.html" %}
     {% endblock %}
 
-Default template uses Twitter Bootstrap classes::
+Default template uses Bootstrap classes::
 
     <ul class="breadcrumb">
         {% for url, label in breadcrumbs %}
@@ -157,7 +157,7 @@ Default template uses Twitter Bootstrap classes::
 * breadcrumbs - list of breadcrumbs elements, each element contains url and label
 * breadcrumbs_total - total number of breadcrumbs elements
 
-To use Twitter Bootstrap V3 template instead of V2, use::
+To use Bootstrap V3 template instead of V2, use::
 
     {% block content %}
         {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
