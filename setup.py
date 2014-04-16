@@ -16,9 +16,9 @@ setup(
     version='0.6.2',
     url='http://prymitive.github.com/bootstrap-breadcrumbs',
     license='MIT',
-    description='Django breadcrumbs using Twitter Bootstrap V2 or V3',
+    description='Django breadcrumbs using Bootstrap V2 or V3',
     long_description='Django template tags used to generate breadcrumbs html '
-                     'using twitter bootstrap css classes or custom template',
+                     'using bootstrap css classes or custom template',
     author='Łukasz Mierzwa',
     author_email='l.mierzwa@gmail.com',
     packages=find_packages(),

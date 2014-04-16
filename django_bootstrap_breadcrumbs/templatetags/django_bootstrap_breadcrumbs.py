@@ -69,7 +69,7 @@ def breadcrumb_safe(context, label, viewname, *args):
 
 def render_breadcrumbs(context, *args):
     """
-    Render breadcrumbs html using twitter bootstrap css classes.
+    Render breadcrumbs html using bootstrap css classes.
     """
     if not 'request' in context:
         logger.error("request object not found in context! Check if "
