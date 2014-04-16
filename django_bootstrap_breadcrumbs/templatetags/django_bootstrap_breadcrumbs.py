@@ -71,7 +71,7 @@ def render_breadcrumbs(context, *args):
     """
     Render breadcrumbs html using bootstrap css classes.
     """
-    if not 'request' in context:
+    if 'request' not in context:
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
                      "TEMPLATE_CONTEXT_PROCESSORS")
@@ -92,8 +92,7 @@ def render_breadcrumbs(context, *args):
         else:
             try:
                 try:
-                    # 'resolver_match' introduced in Django 1.5
-                    current_app = context['request'].resolver_match.namespace
+                    current_app = context.current_app
                 except AttributeError:
                     try:
                         resolver_match = resolve(context['request'].path)
@@ -122,7 +121,7 @@ class BreadcrumbNode(template.Node):
         self.args = args
 
     def render(self, context):
-        if not 'request' in context:
+        if 'request' not in context:
             logger.error("request object not found in context! Check if "
                          "'django.core.context_processors.request' is in "
                          "TEMPLATE_CONTEXT_PROCESSORS")
@@ -160,7 +159,7 @@ def clear_breadcrumbs(context, *args):
     """
     Removes all currently added breadcrumbs.
     """
-    if not 'request' in context:
+    if 'request' not in context:
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
                      "TEMPLATE_CONTEXT_PROCESSORS")
