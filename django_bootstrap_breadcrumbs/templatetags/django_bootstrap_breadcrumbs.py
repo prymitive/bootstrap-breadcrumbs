@@ -14,18 +14,10 @@ from django.core.urlresolvers import (reverse, resolve, NoReverseMatch,
                                       Resolver404)
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django import template
-
-try:
-    from django.utils.encoding import smart_text
-except ImportError:
-    def smart_text(s, **kwargs):
-        if isinstance(s, unicode):
-            return s
-        else:
-            return unicode(s)
 
 
 logger = logging.getLogger(__name__)
