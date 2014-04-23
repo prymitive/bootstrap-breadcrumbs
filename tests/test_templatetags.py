@@ -119,7 +119,7 @@ T_BLOCK_RENDER_BS3 = '''
 
 class Actor(Model):
 
-    name = CharField()
+    name = CharField(max_length=128)
 
     def get_absolute_url(self):
         return '/actor'
