@@ -27,6 +27,7 @@ register = template.Library()
 
 CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
+
 @register.simple_tag(takes_context=True)
 def breadcrumb(context, label, viewname, *args):
     """
@@ -52,6 +53,7 @@ def breadcrumb(context, label, viewname, *args):
                      "TEMPLATE_CONTEXT_PROCESSORS")
     return ''
 
+
 @register.simple_tag(takes_context=True)
 def breadcrumb_safe(context, label, viewname, *args):
     """
@@ -65,6 +67,7 @@ def breadcrumb_safe(context, label, viewname, *args):
                      "'django.core.context_processors.request' is in "
                      "TEMPLATE_CONTEXT_PROCESSORS")
     return ''
+
 
 @register.simple_tag(takes_context=True)
 def render_breadcrumbs(context, *args):
@@ -147,6 +150,7 @@ class BreadcrumbNode(template.Node):
             args.append(value)
         return args
 
+
 @register.tag
 def breadcrumb_for(parser, token):
     bits = list(token.split_contents())
@@ -154,6 +158,7 @@ def breadcrumb_for(parser, token):
     nodelist = parser.parse((end_tag,))
     parser.delete_first_token()
     return BreadcrumbNode(nodelist, bits[1], bits[2:])
+
 
 @register.simple_tag(takes_context=True)
 def clear_breadcrumbs(context, *args):
