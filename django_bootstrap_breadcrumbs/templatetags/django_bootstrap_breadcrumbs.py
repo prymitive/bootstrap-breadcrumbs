@@ -28,6 +28,7 @@ register = template.Library()
 CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
 
+@register.simple_tag(takes_context=True)
 def breadcrumb(context, label, viewname, *args):
     """
     Add link to list of breadcrumbs, usage:
@@ -53,6 +54,7 @@ def breadcrumb(context, label, viewname, *args):
     return ''
 
 
+@register.simple_tag(takes_context=True)
 def breadcrumb_safe(context, label, viewname, *args):
     """
     Same as breadcrumb but label is not escaped.
@@ -67,6 +69,7 @@ def breadcrumb_safe(context, label, viewname, *args):
     return ''
 
 
+@register.simple_tag(takes_context=True)
 def render_breadcrumbs(context, *args):
     """
     Render breadcrumbs html using bootstrap css classes.
@@ -148,6 +151,7 @@ class BreadcrumbNode(template.Node):
         return args
 
 
+@register.tag
 def breadcrumb_for(parser, token):
     bits = list(token.split_contents())
     end_tag = 'end' + bits[0]
@@ -156,6 +160,7 @@ def breadcrumb_for(parser, token):
     return BreadcrumbNode(nodelist, bits[1], bits[2:])
 
 
+@register.simple_tag(takes_context=True)
 def clear_breadcrumbs(context, *args):
     """
     Removes all currently added breadcrumbs.
@@ -170,10 +175,3 @@ def clear_breadcrumbs(context, *args):
         del context['request'].META[CONTEXT_KEY]
 
     return ''
-
-
-register.simple_tag(takes_context=True)(breadcrumb)
-register.simple_tag(takes_context=True)(breadcrumb_safe)
-register.simple_tag(takes_context=True)(render_breadcrumbs)
-register.simple_tag(takes_context=True)(clear_breadcrumbs)
-register.tag('breadcrumb_for', breadcrumb_for)
