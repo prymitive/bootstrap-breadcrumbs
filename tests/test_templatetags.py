@@ -102,6 +102,20 @@ T_BLOCK_FOR_VAR = '''
 {% endblock %}
 '''
 
+T_BLOCK_KWARGS = '''
+{% block breadcrumbs %}
+{% breadcrumb "User 12345" "login_kwargs_url" user_id=12345 %}
+{% breadcrumb "Home" "/" %}
+{% endblock %}
+'''
+
+T_BLOCK_FOR_KWARGS = '''
+{% block breadcrumbs %}
+{% breadcrumb_for login_kwargs_url user_id=12345 %}KV{% endbreadcrumb_for %}
+{% breadcrumb "Home" "/" %}
+{% endblock %}
+'''
+
 T_BLOCK_RENDER = '''
 {% block content %}
 <div>{% render_breadcrumbs %}</div>
@@ -209,6 +223,18 @@ class SiteTests(TestCase):
         self.assertTrue('<a href="/login/Actor">Login Act</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 4)
+
+    def test_render_breadcrumb_kwargs(self):
+        t = Template(T_LOAD + T_BLOCK_KWARGS + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/login/user/12345">User 12345</a>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
+
+    def test_render_breadcrumb_for_kwargs(self):
+        t = Template(T_LOAD + T_BLOCK_FOR_KWARGS + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/login/user/12345">KV</a>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
 
     def test_render_ns(self):
         t = Template(T_LOAD + T_BLOCK_NS + T_BLOCK_RENDER)

@@ -29,7 +29,7 @@ CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
 
 @register.simple_tag(takes_context=True)
-def breadcrumb(context, label, viewname, *args):
+def breadcrumb(context, label, viewname, *args, **kwargs):
     """
     Add link to list of breadcrumbs, usage:
 
@@ -46,7 +46,7 @@ def breadcrumb(context, label, viewname, *args):
     """
     if 'request' in context:
         context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(escape(label), viewname, args)]
+            CONTEXT_KEY, []) + [(escape(label), viewname, args, kwargs)]
     else:
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
@@ -55,13 +55,13 @@ def breadcrumb(context, label, viewname, *args):
 
 
 @register.simple_tag(takes_context=True)
-def breadcrumb_safe(context, label, viewname, *args):
+def breadcrumb_safe(context, label, viewname, *args, **kwargs):
     """
     Same as breadcrumb but label is not escaped.
     """
     if 'request' in context:
         context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(label, viewname, args)]
+            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
     else:
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
@@ -86,8 +86,8 @@ def render_breadcrumbs(context, *args):
         template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
 
     links = []
-    for (label, viewname, view_args) in context['request'].META.get(
-            CONTEXT_KEY, []):
+    for (label, viewname, view_args, view_kwargs) in context[
+            'request'].META.get(CONTEXT_KEY, []):
         if isinstance(viewname, Model) and hasattr(
                 viewname, 'get_absolute_url') and ismethod(
                 viewname.get_absolute_url):
@@ -104,7 +104,7 @@ def render_breadcrumbs(context, *args):
                     except Resolver404:
                         current_app = None
                 url = reverse(viewname=viewname, args=view_args,
-                              current_app=current_app)
+                              kwargs=view_kwargs, current_app=current_app)
             except NoReverseMatch:
                 url = viewname
         links.append((url, _(smart_text(label)) if label else label))
@@ -123,6 +123,13 @@ class BreadcrumbNode(template.Node):
         self.nodelist = nodelist
         self.viewname = viewname
         self.args = args
+        self.kwargs = {}
+        for arg in args:
+            if '=' in arg:
+                name = arg.split('=')[0]
+                val = '='.join(arg.split('=')[1:])
+                self.kwargs[name] = val
+                self.args.remove(arg)
 
     def render(self, context):
         if 'request' not in context:
@@ -136,8 +143,9 @@ class BreadcrumbNode(template.Node):
         except template.VariableDoesNotExist:
             viewname = self.viewname
         args = self.parse_args(context)
+        kwargs = self.parse_kwargs(context)
         context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(label, viewname, args)]
+            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
         return ''
 
     def parse_args(self, context):
@@ -149,6 +157,16 @@ class BreadcrumbNode(template.Node):
                 value = arg
             args.append(value)
         return args
+
+    def parse_kwargs(self, context):
+        kwargs = {}
+        for name, val in self.kwargs.items():
+            try:
+                value = template.Variable(val).resolve(context)
+            except template.VariableDoesNotExist:
+                value = val
+            kwargs[name] = value
+        return kwargs
 
 
 @register.tag
