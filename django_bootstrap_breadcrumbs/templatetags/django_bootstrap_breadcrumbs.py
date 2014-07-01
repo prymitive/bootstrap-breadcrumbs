@@ -91,7 +91,7 @@ def render_breadcrumbs(context, *args):
         if isinstance(viewname, Model) and hasattr(
                 viewname, 'get_absolute_url') and ismethod(
                 viewname.get_absolute_url):
-            url = viewname.get_absolute_url()
+            url = viewname.get_absolute_url(*view_args, **view_kwargs)
         else:
             try:
                 try:
@@ -122,7 +122,7 @@ class BreadcrumbNode(template.Node):
     def __init__(self, nodelist, viewname, args):
         self.nodelist = nodelist
         self.viewname = viewname
-        self.args = args
+        self.args = list(args)
         self.kwargs = {}
         for arg in args:
             if '=' in arg:

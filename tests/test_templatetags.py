@@ -117,6 +117,23 @@ T_BLOCK_FOR_KWARGS = '''
 {% endblock %}
 '''
 
+T_BLOCK_KWARGS_MODEL = '''
+{% block breadcrumbs %}
+{% breadcrumb actor actor %}
+{% breadcrumb actor actor id=12345 %}
+{% breadcrumb "Home" "/" %}
+{% endblock %}
+'''
+
+T_BLOCK_FOR_KWARGS_MODEL = '''
+{% block breadcrumbs %}
+{% breadcrumb_for actor %}actor{% endbreadcrumb_for %}
+{% breadcrumb_for actor id=actor.name %}actor{% endbreadcrumb_for %}
+{% breadcrumb_for actor id=12345 order=abc %}actor{% endbreadcrumb_for %}
+{% breadcrumb "Home" "/" %}
+{% endblock %}
+'''
+
 T_BLOCK_RENDER = '''
 {% block content %}
 <div>{% render_breadcrumbs %}</div>
@@ -136,7 +153,12 @@ class Actor(Model):
 
     name = CharField(max_length=128)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, *args, **kwargs):
+        print((args, kwargs))
+        if kwargs and 'id' in kwargs and 'order' in kwargs:
+            return '/actor/%s/details/%s' % (kwargs['id'], kwargs['order'])
+        elif kwargs and 'id' in kwargs:
+            return '/actor/%s' % kwargs['id']
         return '/actor'
 
 
@@ -237,6 +259,22 @@ class SiteTests(TestCase):
         self.assertTrue('<a href="/login/user/dummyarg">KV</a>' in resp)
         self.assertTrue('<a href="/login/user/Actor"></a>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 3)
+
+    def test_render_breadcrumb_kwargs_model(self):
+        t = Template(T_LOAD + T_BLOCK_KWARGS_MODEL + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/actor">Actor object</a>' in resp)
+        self.assertTrue('<a href="/actor/12345">Actor object</a>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 3)
+
+    def test_render_breadcrumb_for_kwargs_model(self):
+        t = Template(T_LOAD + T_BLOCK_FOR_KWARGS_MODEL + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/actor">actor</a>' in resp)
+        self.assertTrue('<a href="/actor/Actor">actor</a>' in resp)
+        self.assertTrue(
+            '<a href="/actor/12345/details/abc">actor</a>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 4)
 
     def test_render_ns(self):
         t = Template(T_LOAD + T_BLOCK_NS + T_BLOCK_RENDER)
