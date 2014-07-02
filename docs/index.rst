@@ -178,14 +178,14 @@ base.html::
 
     {% load django_bootstrap_breadcrumbs %}
 
-    {% block breadcrumbs %}
-        {% clear_breadcrumbs %}
-        {% breadcrumb "Home" "/" %}
-        {% breadcrumb "Users and groups" "users_and_groups_index" %}
-    {% endblock %}
 
     {% block content %}
-        {% render_breadcrumbs %}
+        {% block breadcrumbs %}
+            {% clear_breadcrumbs %}
+            {% breadcrumb "Home" "/" %}
+            {% breadcrumb "Users and groups" "users_and_groups_index" %}
+            {% render_breadcrumbs %}
+        {% endblock %}
     {% endblock %}
 
 users.html::
