@@ -21,7 +21,7 @@ setup(
                      'using bootstrap css classes or custom template',
     author='Łukasz Mierzwa',
     author_email='l.mierzwa@gmail.com',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests']),
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
