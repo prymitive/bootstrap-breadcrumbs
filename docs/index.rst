@@ -50,7 +50,7 @@ There are currently three tags for adding breadcrumbs for pages (remeber to use 
 
 Syntax::
 
-    {% breadcrumb $label $viewname [*args] %}
+    {% breadcrumb $label $viewname [*args] [**kwargs] %}
 
 
 ``label`` - Breadcrumb link text.
@@ -101,7 +101,7 @@ Example::
 
 Starting with 0.4.0 there is also block tag, usage::
 
-    {% breadcrumb_for $viewname [*args] %}
+    {% breadcrumb_for $viewname [*args] [**kwargs] %}
         $label
     {% endbreadcrumb_for %}
 
