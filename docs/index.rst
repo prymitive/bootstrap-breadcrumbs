@@ -59,9 +59,11 @@ Syntax::
 
 ``args`` - Optional arguments to django's ``reverse()`` function.
 
+``kwargs`` - Optional keyword arguments to django's ``reverse()`` function.
+
 viewname will be resolved into url using django ``reverse()`` function using::
 
-    url = resolve(viewname, args=args)
+    url = resolve(viewname, args=args, kwargs=kwargs)
 
 If viewname cannot be resolved using reverse() than it will be rendered as is, so that static
 url's can be used in ``{% breadcrumb %}`` template tags.
@@ -122,6 +124,9 @@ Rendering breadcrumbs
 =====================
 
 To render breadcrumbs as HTML use ``{% render_breadcrumbs %}``.
+
+.. important::
+    Remember that ``{% render_breadcrumbs %}`` tag must appear in template after all other breadcrumb tags.
 
 Example::
 
@@ -251,6 +256,7 @@ Result::
 Changelog
 =========
 
+* 0.6.3 - added support for passing kwargs to breadcrumb tags
 * 0.6.2 - license changed to MIT
 * 0.6.1 - python3 support
 * 0.6.0 - added clear_breadcrumbs template tag
