@@ -96,6 +96,17 @@ Example::
         {% breadcrumb_safe "<i class='icon-home'></i>Home" "/" %}
     {% endblock %}
 
+``{% breadcrumb_raw %}``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default breadcrumbs labels are translated using gettext, if translation should be skipped ``{% breadcrumb_raw %}`` can be used (label is still escaped). Available since 0.7.0 release.
+
+``{% breadcrumb_raw_safe %}``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If label should not be escaped and not translated ``{% breadcrumb_raw_safe %}`` can be used. Available since 0.7.0 release.
+
+
 ``{% breadcrumb_for %}``
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -107,6 +118,9 @@ Starting with 0.4.0 there is also block tag, usage::
 
 Any code can be used there, it won't be escaped in any way.
 It gives the possibility to fully control the label content and for example escape only parts of it.
+
+.. note::
+  Since 0.7.0 final label part from ``{% breadcrumb_for %}`` is no longer translated, add ``{% trans %}`` tag if needed.
 
 Examples::
 
@@ -256,6 +270,7 @@ Result::
 Changelog
 =========
 
+* 0.7.0 - added breadcrumb_raw and breadcrumb_raw_safe, label in breadcrumb_for is no longer translated
 * 0.6.3 - added support for passing kwargs to breadcrumb tags
 * 0.6.2 - license changed to MIT
 * 0.6.1 - python3 support
