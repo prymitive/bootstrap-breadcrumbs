@@ -42,13 +42,26 @@ T_BLOCK_USER = '''
 
 T_BLOCK_SAFE = '''
 {% block breadcrumbs %}
-{% breadcrumb_safe "<span>John</span>" "/john" %}
+{% breadcrumb_safe "<&>" "/" %}
+{% breadcrumb_safe "<span><></span>" "/john" %}
+{% endblock %}
+'''
+
+T_BLOCK_RAW = '''
+{% block breadcrumbs %}
+{% breadcrumb_raw "<span>John</span>" "/john" %}
+{% endblock %}
+'''
+
+T_BLOCK_RAW_SAFE = '''
+{% block breadcrumbs %}
+{% breadcrumb_raw_safe "<span>John</span>" "/john" %}
 {% endblock %}
 '''
 
 T_BLOCK_USER_SAFE = '''
 {% block breadcrumbs %}
-{% breadcrumb "Home" "/" %}
+{% breadcrumb "<" "/" %}
 {% breadcrumb "Login" "login_url" %}
 {% breadcrumb actor actor %}
 {% breadcrumb "Users and groups" "/users" %}
@@ -154,7 +167,6 @@ class Actor(Model):
     name = CharField(max_length=128)
 
     def get_absolute_url(self, *args, **kwargs):
-        print((args, kwargs))
         if kwargs and 'id' in kwargs and 'order' in kwargs:
             return '/actor/%s/details/%s' % (kwargs['id'], kwargs['order'])
         elif kwargs and 'id' in kwargs:
@@ -196,6 +208,14 @@ class SiteTests(TestCase):
 
     def test_push_breadcrumbs_safe(self):
         t = Template(T_LOAD + T_BLOCK_SAFE)
+        self.assertEqual(t.render(self.context), '\n\n\n\n\n')
+
+    def test_push_breadcrumbs_raw(self):
+        t = Template(T_LOAD + T_BLOCK_RAW)
+        self.assertEqual(t.render(self.context), '\n\n\n\n')
+
+    def test_push_breadcrumbs_raw_safe(self):
+        t = Template(T_LOAD + T_BLOCK_RAW_SAFE)
         self.assertEqual(t.render(self.context), '\n\n\n\n')
 
     def test_render_empty_breadcrumbs(self):
@@ -213,7 +233,7 @@ class SiteTests(TestCase):
     def test_render(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
         resp = t.render(self.context)
-        self.assertTrue('<a href="/">Home</a>' in resp)
+        self.assertTrue('<a href="/">&lt;</a>' in resp)
         self.assertTrue('<a href="/login">Login</a>' in resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
         self.assertTrue('<a href="/users">Users and groups</a>' in resp)
@@ -221,10 +241,18 @@ class SiteTests(TestCase):
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
+    def test_render_safe(self):
+        t = Template(T_LOAD + T_BLOCK_SAFE + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/"><&></a>' in resp)
+        self.assertTrue('<span><></span>' in resp)
+        self.assertTrue('<span class="divider">/</span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
+
     def test_render_bs3(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS3)
         resp = t.render(self.context)
-        self.assertTrue('<a href="/">Home</a>' in resp)
+        self.assertTrue('<a href="/">&lt;</a>' in resp)
         self.assertTrue('<a href="/login">Login</a>' in resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
         self.assertTrue('<a href="/users">Users and groups</a>' in resp)

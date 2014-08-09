@@ -28,6 +28,16 @@ register = template.Library()
 CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
 
+def append_breadcrumb(context, label, viewname, args, kwargs):
+    if 'request' in context:
+        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
+    else:
+        logger.error("request object not found in context! Check if "
+                     "'django.core.context_processors.request' is in "
+                     "TEMPLATE_CONTEXT_PROCESSORS")
+
+
 @register.simple_tag(takes_context=True)
 def breadcrumb(context, label, viewname, *args, **kwargs):
     """
@@ -44,13 +54,7 @@ def breadcrumb(context, label, viewname, *args, **kwargs):
                      instance with implemented get_absolute_url().
     :param args: Any arguments to view function.
     """
-    if 'request' in context:
-        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(escape(label), viewname, args, kwargs)]
-    else:
-        logger.error("request object not found in context! Check if "
-                     "'django.core.context_processors.request' is in "
-                     "TEMPLATE_CONTEXT_PROCESSORS")
+    append_breadcrumb(context, _(escape(label)), viewname, args, kwargs)
     return ''
 
 
@@ -59,13 +63,25 @@ def breadcrumb_safe(context, label, viewname, *args, **kwargs):
     """
     Same as breadcrumb but label is not escaped.
     """
-    if 'request' in context:
-        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
-    else:
-        logger.error("request object not found in context! Check if "
-                     "'django.core.context_processors.request' is in "
-                     "TEMPLATE_CONTEXT_PROCESSORS")
+    append_breadcrumb(context, _(label), viewname, args, kwargs)
+    return ''
+
+
+@register.simple_tag(takes_context=True)
+def breadcrumb_raw(context, label, viewname, *args, **kwargs):
+    """
+    Same as breadcrumb but label is not translated.
+    """
+    append_breadcrumb(context, escape(label), viewname, args, kwargs)
+    return ''
+
+
+@register.simple_tag(takes_context=True)
+def breadcrumb_raw_safe(context, label, viewname, *args, **kwargs):
+    """
+    Same as breadcrumb but label is not escaped and translated.
+    """
+    append_breadcrumb(context, label, viewname, args, kwargs)
     return ''
 
 
@@ -107,7 +123,7 @@ def render_breadcrumbs(context, *args):
                               kwargs=view_kwargs, current_app=current_app)
             except NoReverseMatch:
                 url = viewname
-        links.append((url, _(smart_text(label)) if label else label))
+        links.append((url, smart_text(label) if label else label))
 
     if not links:
         return ''
@@ -144,8 +160,7 @@ class BreadcrumbNode(template.Node):
             viewname = self.viewname
         args = self.parse_args(context)
         kwargs = self.parse_kwargs(context)
-        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
+        append_breadcrumb(context, label, viewname, args, kwargs)
         return ''
 
     def parse_args(self, context):
