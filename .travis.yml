@@ -23,6 +23,7 @@ matrix:
       env: DJANGO=1.4.15
 
 install:
+  - test "$TRAVIS_PYTHON_VERSION" = "2.6" && pip install -U importlib
   - pip install -U Django==$DJANGO
   - pip install -Ur requirements-test.txt
 
