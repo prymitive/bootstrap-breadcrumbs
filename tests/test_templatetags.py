@@ -13,6 +13,14 @@ from django.test.client import RequestFactory
 from django.db.models import Model, CharField
 
 
+try:
+    from django import setup
+except ImportError:
+    pass
+else:
+    setup()
+
+
 T_LOAD = '{% load django_bootstrap_breadcrumbs %}'
 
 T_BLOCK_CLEAR = '''
