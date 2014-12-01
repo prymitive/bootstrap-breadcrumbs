@@ -43,7 +43,7 @@ After that make necessary changes to Django settings::
 Declaring breadcrumbs
 =====================
 
-There are currently three tags for adding breadcrumbs for pages (remeber to use tags inside ``{% block %}``):
+There are currently three tags for adding breadcrumbs for pages (remeber to use the tags inside a ``{% block %}``):
 
 ``{% breadcrumb %}``
 ~~~~~~~~~~~~~~~~~~~~
@@ -55,7 +55,7 @@ Syntax::
 
 ``label`` - Breadcrumb link text.
 
-``viewname`` - Any string that can be resolved into view url with django reverse() function or django Model instance with implemented ``get_absolute_url()`` method.
+``viewname`` - Any string that can be resolved into a view url with django reverse() function or a django Model instance with implemented ``get_absolute_url()`` method.
 
 ``args`` - Optional arguments to django's ``reverse()`` function.
 
@@ -65,12 +65,12 @@ viewname will be resolved into url using django ``reverse()`` function using::
 
     url = resolve(viewname, args=args, kwargs=kwargs)
 
-If viewname cannot be resolved using reverse() than it will be rendered as is, so that static
+If the viewname cannot be resolved using reverse() then it will be rendered as is, so that static
 url's can be used in ``{% breadcrumb %}`` template tags.
 
-Note that label is escaped by default, so all HTML tags will be replaced.
-This is protection for cases where label can contain user provided content, for example username.
-If user would somehow put links or javascript into the label, he could expose any viewer to malicious code.
+Note that the label is escaped by default, so all HTML tags will be replaced.
+This is a protection for cases where the label can contain user provided content, for example a username.
+If the user would somehow put links or javascript into the label, he could expose any viewer to malicious code.
 
 Example::
 
@@ -99,12 +99,12 @@ Example::
 ``{% breadcrumb_raw %}``
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default breadcrumbs labels are translated using gettext, if translation should be skipped ``{% breadcrumb_raw %}`` can be used (label is still escaped). Available since 0.7.0 release.
+By default breadcrumbs labels are translated using gettext, if the translation should be skipped ``{% breadcrumb_raw %}`` can be used (the label is still escaped). Available since 0.7.0 release.
 
 ``{% breadcrumb_raw_safe %}``
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If label should not be escaped and not translated ``{% breadcrumb_raw_safe %}`` can be used. Available since 0.7.0 release.
+If the label should neither be escaped nor translated ``{% breadcrumb_raw_safe %}`` can be used. Available since 0.7.0 release.
 
 
 ``{% breadcrumb_for %}``
@@ -148,7 +148,7 @@ Example::
         {% render_breadcrumbs %}
     {% endblock %}
 
-Starting with 0.5.0 it's possible to use custom template to integrate breadcrumbs with frameworks other than Bootstrap.
+Starting with 0.5.0 it's possible to use a custom template to integrate breadcrumbs with frameworks other than Bootstrap.
 
 Example::
 
@@ -182,7 +182,7 @@ To use Bootstrap V3 template instead of V2, use::
         {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
     {% endblock %}
 
-With 0.6.0 new template tag was added for clearing breadcrumbs list:
+With 0.6.0 a new template tag was added for clearing breadcrumbs list:
 
     {% clear_breadcrumbs %}
 
