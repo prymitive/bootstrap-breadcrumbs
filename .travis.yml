@@ -8,21 +8,21 @@ python:
   - "3.4"
 
 env:
-  - DJANGO=1.4.16
-  - DJANGO=1.5.11
-  - DJANGO=1.6.8
-  - DJANGO=1.7.1
+  - DJANGO=1.4.18
+  - DJANGO=1.5.12
+  - DJANGO=1.6.10
+  - DJANGO=1.7.4
 
 matrix:
   exclude:
     - python: "2.6"
-      env: DJANGO=1.7.1
+      env: DJANGO=1.7.4
     - python: "3.2"
-      env: DJANGO=1.4.16
+      env: DJANGO=1.4.18
     - python: "3.3"
-      env: DJANGO=1.4.16
+      env: DJANGO=1.4.18
     - python: "3.4"
-      env: DJANGO=1.4.16
+      env: DJANGO=1.4.18
 
 install:
   - pip install -U Django==$DJANGO
