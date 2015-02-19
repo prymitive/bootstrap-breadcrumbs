@@ -182,6 +182,8 @@ To use Bootstrap V3 template instead of V2, use::
         {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
     {% endblock %}
 
+Starting with 0.7.1 it's possible to set default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html'.
+Passing template path to ``{% render_breadcrumbs %}`` takes precedence over BREADCRUMBS_TEMPLATE.
 With 0.6.0 a new template tag was added for clearing breadcrumbs list:
 
     {% clear_breadcrumbs %}
@@ -270,6 +272,7 @@ Result::
 Changelog
 =========
 
+* 0.7.1 - added support for setting default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html' (gdebure)
 * 0.7.0 - added breadcrumb_raw and breadcrumb_raw_safe, label in breadcrumb_for is no longer translated
 * 0.6.3 - added support for passing kwargs to breadcrumb tags
 * 0.6.2 - license changed to MIT
@@ -296,3 +299,4 @@ Contributors:
 * gnuwho
 * Christian Dullweber
 * Eric Davis (edavis)
+* Guillaume DE BURE (gdebure)
