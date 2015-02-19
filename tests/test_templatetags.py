@@ -11,6 +11,7 @@ from django.test import TestCase
 from django.template import Context, Template
 from django.test.client import RequestFactory
 from django.db.models import Model, CharField
+from django.test.utils import override_settings
 
 
 try:
@@ -265,6 +266,20 @@ class SiteTests(TestCase):
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
         self.assertTrue('<a href="/users">Users and groups</a>' in resp)
         self.assertTrue('<span>John</span>' in resp)
+        self.assertFalse('<span class="divider">/</span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
+
+    @override_settings(
+        BREADCRUMBS_TEMPLATE='django_bootstrap_breadcrumbs/bootstrap3.html')
+    def test_render_bs3_using_settings(self):
+        t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a href="/">&lt;</a>' in resp)
+        self.assertTrue('<a href="/login">Login</a>' in resp)
+        self.assertTrue('<a href="/actor">Actor object</a>' in resp)
+        self.assertTrue('<a href="/users">Users and groups</a>' in resp)
+        self.assertTrue('<span>John</span>' in resp)
+        self.assertFalse('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
     def test_render_breadcrumb_for(self):

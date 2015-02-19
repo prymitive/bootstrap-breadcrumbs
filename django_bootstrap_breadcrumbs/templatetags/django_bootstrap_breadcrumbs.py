@@ -17,6 +17,7 @@ from django.utils.safestring import mark_safe
 from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.db.models import Model
+from django.conf import settings
 from django import template
 
 
@@ -99,7 +100,10 @@ def render_breadcrumbs(context, *args):
     if args:
         template_path = args[0]
     else:
-        template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
+        try:
+            template_path = settings.BREADCRUMBS_TEMPLATE
+        except AttributeError:
+            template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
 
     links = []
     for (label, viewname, view_args, view_kwargs) in context[
