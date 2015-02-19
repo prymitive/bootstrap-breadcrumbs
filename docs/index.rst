@@ -183,7 +183,9 @@ To use Bootstrap V3 template instead of V2, use::
     {% endblock %}
 
 Starting with 0.7.1 it's possible to set default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html'.
+
 Passing template path to ``{% render_breadcrumbs %}`` takes precedence over BREADCRUMBS_TEMPLATE.
+
 With 0.6.0 a new template tag was added for clearing breadcrumbs list:
 
     {% clear_breadcrumbs %}
