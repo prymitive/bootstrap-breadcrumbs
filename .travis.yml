@@ -18,6 +18,8 @@ matrix:
   exclude:
     - python: "2.6"
       env: DJANGO=1.7.9
+    - python: "2.6"
+      env: DJANGO=1.8.2
     - python: "3.2"
       env: DJANGO=1.4.20
     - python: "3.3"
