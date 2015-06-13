@@ -11,13 +11,13 @@ env:
   - DJANGO=1.4.20
   - DJANGO=1.5.12
   - DJANGO=1.6.11
-  - DJANGO=1.7.9
+  - DJANGO=1.7.8
   - DJANGO=1.8.2
 
 matrix:
   exclude:
     - python: "2.6"
-      env: DJANGO=1.7.9
+      env: DJANGO=1.7.8
     - python: "2.6"
       env: DJANGO=1.8.2
     - python: "3.2"
