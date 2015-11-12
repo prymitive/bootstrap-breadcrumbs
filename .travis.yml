@@ -29,6 +29,12 @@ matrix:
       env: DJANGO=1.4.22
     - python: "3.5"
       env: DJANGO=1.4.22
+    - python: "3.5"
+      env: DJANGO=1.5.12
+    - python: "3.5"
+      env: DJANGO=1.6.11
+    - python: "3.5"
+      env: DJANGO=1.7.10
 
 install:
   - pip install -U Django==$DJANGO
