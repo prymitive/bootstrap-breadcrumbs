@@ -137,7 +137,6 @@ def render_breadcrumbs(context, *args):
         template_path, context))
 
 
-
 class BreadcrumbNode(template.Node):
 
     def __init__(self, nodelist, viewname, args):
