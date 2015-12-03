@@ -274,6 +274,7 @@ Result::
 Changelog
 =========
 
+* 0.7.2 - fixed context passing in render_breadcrumbs() (JeLoueMonCampingCar)
 * 0.7.1 - added support for setting default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html' (gdebure)
 * 0.7.0 - added breadcrumb_raw and breadcrumb_raw_safe, label in breadcrumb_for is no longer translated
 * 0.6.3 - added support for passing kwargs to breadcrumb tags
@@ -302,3 +303,4 @@ Contributors:
 * Christian Dullweber
 * Eric Davis (edavis)
 * Guillaume DE BURE (gdebure)
+* JeLoueMonCampingCar
