@@ -186,6 +186,7 @@ class Actor(Model):
         app_label = 'test_app'
 
 
+@override_settings(INSTALLED_APPS=['django', 'tests'])
 class SiteTests(TestCase):
 
     def setUp(self):
