@@ -182,6 +182,9 @@ class Actor(Model):
             return '/actor/%s' % kwargs['id']
         return '/actor'
 
+    class Meta:
+        app_label = 'test_app'
+
 
 class SiteTests(TestCase):
 
