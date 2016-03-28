@@ -170,6 +170,14 @@ T_BLOCK_RENDER_BS3 = '''
 {% endblock %}
 '''
 
+T_BLOCK_RENDER_BS4 = '''
+{% block content %}
+<div>
+{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+</div>
+{% endblock %}
+'''
+
 
 class Actor(Model):
 
@@ -240,6 +248,10 @@ class SiteTests(TestCase):
         t = Template(T_LOAD + T_BLOCK_RENDER_BS3)
         self.assertEqual(t.render(self.context), '\n\n<div>\n\n</div>\n\n')
 
+    def test_render_empty_breadcrumbs_bs4(self):
+        t = Template(T_LOAD + T_BLOCK_RENDER_BS4)
+        self.assertEqual(t.render(self.context), '\n\n<div>\n\n</div>\n\n')
+
     def test_render_without_request(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
         self.assertNotEqual(t.render(Context()), '')
@@ -274,6 +286,20 @@ class SiteTests(TestCase):
         self.assertFalse('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
+    def test_render_bs4(self):
+        t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS4)
+        resp = t.render(self.context)
+        self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/login">'
+                        'Login</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/actor">'
+                        'Actor object</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/users">'
+                        'Users and groups</a>' in resp)
+        self.assertTrue('<span class="breadcrumb-item active"><span>'
+                        'John</span></span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
+
     @override_settings(
         BREADCRUMBS_TEMPLATE='django_bootstrap_breadcrumbs/bootstrap3.html')
     def test_render_bs3_using_settings(self):
@@ -285,6 +311,22 @@ class SiteTests(TestCase):
         self.assertTrue('<a href="/users">Users and groups</a>' in resp)
         self.assertTrue('<span>John</span>' in resp)
         self.assertFalse('<span class="divider">/</span>' in resp)
+        self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
+
+    @override_settings(
+        BREADCRUMBS_TEMPLATE='django_bootstrap_breadcrumbs/bootstrap4.html')
+    def test_render_bs4_using_settings(self):
+        t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
+        resp = t.render(self.context)
+        self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/login">'
+                        'Login</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/actor">'
+                        'Actor object</a>' in resp)
+        self.assertTrue('<a class="breadcrumb-item" href="/users">'
+                        'Users and groups</a>' in resp)
+        self.assertTrue('<span class="breadcrumb-item active"><span>'
+                        'John</span></span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
     def test_render_breadcrumb_for(self):
