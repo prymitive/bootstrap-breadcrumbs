@@ -1,0 +1,9 @@
+<nav class="breadcrumb">
+  {% for url, label in breadcrumbs %}
+    {% ifequal forloop.counter breadcrumbs_total %}
+      <span class="breadcrumb-item active">{{ label|safe }}</span>
+    {% else %}
+      <a class="breadcrumb-item" href="{{ url }}">{{ label|safe }}</a>
+    {% endifequal %}
+  {% endfor %}
+</nav>
