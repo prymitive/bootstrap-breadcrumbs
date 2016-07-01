@@ -113,13 +113,11 @@ def render_breadcrumbs(context, *args):
     Render breadcrumbs html using bootstrap css classes.
     """
 
-    if args:
+    try:
         template_path = args[0]
-    else:
-        try:
-            template_path = settings.BREADCRUMBS_TEMPLATE
-        except AttributeError:
-            template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
+    except IndexError:
+        template_path = getattr(settings, 'BREADCRUMBS_TEMPLATE',
+                                'django_bootstrap_breadcrumbs/bootstrap2.html')
 
     links = []
     for (label, viewname, view_args, view_kwargs) in context[
@@ -218,7 +216,5 @@ def clear_breadcrumbs(context, *args):
     Removes all currently added breadcrumbs.
     """
 
-    if CONTEXT_KEY in context['request'].META:
-        del context['request'].META[CONTEXT_KEY]
-
+    context['request'].META.pop(CONTEXT_KEY, None)
     return ''
