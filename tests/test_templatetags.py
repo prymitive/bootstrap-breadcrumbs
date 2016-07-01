@@ -7,12 +7,13 @@
 
 from __future__ import unicode_literals
 
+from django import VERSION
 from django.test import TestCase
 from django.template import Context, Template
 from django.test.client import RequestFactory
 from django.db.models import Model, CharField
 from django.test.utils import override_settings
-
+from testfixtures import LogCapture
 
 try:
     from django import setup
@@ -204,6 +205,18 @@ class SiteTests(TestCase):
         self.request = self.factory.get('/')
         self.context = Context({'request': self.request, 'actor': self.actor})
 
+    def assertRequestError(self, log):
+        message = str(log)
+        self.assertIn('ERROR', message)
+        self.assertIn('not found', message)
+        if VERSION < (1, 8):
+            self.assertIn('django.core.context_processors.request', message)
+            self.assertIn('TEMPLATE_CONTEXT_PROCESSORS', message)
+        else:
+            self.assertIn('django.template.context_processors.request',
+                          message)
+            self.assertIn('context_processors', message)
+
     def test_load(self):
         t = Template(T_LOAD)
         self.assertEqual(t.render(self.context), '')
@@ -214,7 +227,9 @@ class SiteTests(TestCase):
 
     def test_clear_breadcrumbs_without_request(self):
         t = Template(T_LOAD + T_BLOCK_CLEAR)
-        self.assertEqual(t.render(Context()), '\n\n\n\n')
+        with LogCapture() as log:
+            self.assertEqual(t.render(Context()), '\n\n\n\n')
+        self.assertRequestError(log)
 
     def test_push_breadcrumbs(self):
         t = Template(T_LOAD + T_BLOCK_USER)
@@ -226,7 +241,9 @@ class SiteTests(TestCase):
 
     def test_push_breadcrumb_for_without_request(self):
         t = Template(T_LOAD + T_BLOCK_FOR)
-        self.assertEqual(t.render(Context()), '\n\n\n\n\n')
+        with LogCapture() as log:
+            self.assertEqual(t.render(Context()), '\n\n\n\n\n')
+        self.assertRequestError(log)
 
     def test_push_breadcrumbs_safe(self):
         t = Template(T_LOAD + T_BLOCK_SAFE)
@@ -254,7 +271,9 @@ class SiteTests(TestCase):
 
     def test_render_without_request(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
-        self.assertNotEqual(t.render(Context()), '')
+        with LogCapture() as log:
+            self.assertNotEqual(t.render(Context()), '')
+        self.assertRequestError(log)
 
     def test_render(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER)
