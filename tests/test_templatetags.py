@@ -157,6 +157,13 @@ T_BLOCK_FOR_KWARGS_MODEL = '''
 {% endblock %}
 '''
 
+T_BLOCK_EMPTY_URL = '''
+{% block breadcrumbs %}
+{% breadcrumb_for "" %}Home For{% endbreadcrumb_for %}
+{% breadcrumb "Home" "" %}
+{% endblock %}
+'''
+
 T_BLOCK_RENDER = '''
 {% block content %}
 <div>{% render_breadcrumbs %}</div>
@@ -256,6 +263,30 @@ class SiteTests(TestCase):
     def test_push_breadcrumbs_raw_safe(self):
         t = Template(T_LOAD + T_BLOCK_RAW_SAFE)
         self.assertEqual(t.render(self.context), '\n\n\n\n')
+
+    def test_render_empty_url_bs2(self):
+        t = Template(T_LOAD + T_BLOCK_EMPTY_URL + T_BLOCK_RENDER)
+        self.assertHTMLEqual(t.render(self.context),
+                             '<div><ul class="breadcrumb">'
+                             '<li>Home For<span class="divider">/</span></li>'
+                             '<li>Home</li>'
+                             '</ul></div>')
+
+    def test_render_empty_url_bs3(self):
+        t = Template(T_LOAD + T_BLOCK_EMPTY_URL + T_BLOCK_RENDER_BS3)
+        self.assertHTMLEqual(t.render(self.context),
+                             '<div><ul class="breadcrumb">'
+                             '<li>Home For</li>'
+                             '<li class="active">Home</li>'
+                             '</ul></div>')
+
+    def test_render_empty_url_bs4(self):
+        t = Template(T_LOAD + T_BLOCK_EMPTY_URL + T_BLOCK_RENDER_BS4)
+        self.assertHTMLEqual(t.render(self.context),
+                             '<div><nav class="breadcrumb">'
+                             '<span class="breadcrumb-item">Home For</span>'
+                             '<span class="breadcrumb-item active">Home</span>'
+                             '</nav></div>')
 
     def test_render_empty_breadcrumbs(self):
         t = Template(T_LOAD + T_BLOCK_RENDER)
