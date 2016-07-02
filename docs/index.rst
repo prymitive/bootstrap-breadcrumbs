@@ -282,6 +282,7 @@ Result::
 Changelog
 =========
 
+* 0.8   - lots of cleanups and improvements by Alexandre Macabies (zopieux)
 * 0.7.3 - added bootstrap v4 template (JP-Ellis)
 * 0.7.2 - fixed context passing in render_breadcrumbs() (JeLoueMonCampingCar)
 * 0.7.1 - added support for setting default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html' (gdebure)
