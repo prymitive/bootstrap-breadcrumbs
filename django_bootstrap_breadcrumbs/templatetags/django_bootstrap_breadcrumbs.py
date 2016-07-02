@@ -19,7 +19,7 @@ from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django.conf import settings
 from django import template
-
+from six import wraps
 
 logger = logging.getLogger(__name__)
 
@@ -29,14 +29,34 @@ register = template.Library()
 CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
 
-def append_breadcrumb(context, label, viewname, args, kwargs):
-    if 'request' in context:
-        context['request'].META[CONTEXT_KEY] = context['request'].META.get(
-            CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
-    else:
+def log_request_not_found():
+    from django import VERSION
+    if VERSION < (1, 8):  # pragma: nocover
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
                      "TEMPLATE_CONTEXT_PROCESSORS")
+    else:  # pragma: nocover
+        logger.error("request object not found in context! Check if "
+                     "'django.template.context_processors.request' is in the "
+                     "'context_processors' option of your template settings.")
+
+
+def requires_request(func):
+    @wraps(func)
+    def wrapped(context, *args, **kwargs):
+        if 'request' in context:
+            return func(context, *args, **kwargs)
+
+        log_request_not_found()
+        return ''
+
+    return wrapped
+
+
+@requires_request
+def append_breadcrumb(context, label, viewname, args, kwargs):
+    context['request'].META[CONTEXT_KEY] = context['request'].META.get(
+        CONTEXT_KEY, []) + [(label, viewname, args, kwargs)]
 
 
 @register.simple_tag(takes_context=True)
@@ -87,23 +107,17 @@ def breadcrumb_raw_safe(context, label, viewname, *args, **kwargs):
 
 
 @register.simple_tag(takes_context=True)
+@requires_request
 def render_breadcrumbs(context, *args):
     """
     Render breadcrumbs html using bootstrap css classes.
     """
-    if 'request' not in context:
-        logger.error("request object not found in context! Check if "
-                     "'django.core.context_processors.request' is in "
-                     "TEMPLATE_CONTEXT_PROCESSORS")
-        return ''
 
-    if args:
+    try:
         template_path = args[0]
-    else:
-        try:
-            template_path = settings.BREADCRUMBS_TEMPLATE
-        except AttributeError:
-            template_path = 'django_bootstrap_breadcrumbs/bootstrap2.html'
+    except IndexError:
+        template_path = getattr(settings, 'BREADCRUMBS_TEMPLATE',
+                                'django_bootstrap_breadcrumbs/bootstrap2.html')
 
     links = []
     for (label, viewname, view_args, view_kwargs) in context[
@@ -153,9 +167,7 @@ class BreadcrumbNode(template.Node):
 
     def render(self, context):
         if 'request' not in context:
-            logger.error("request object not found in context! Check if "
-                         "'django.core.context_processors.request' is in "
-                         "TEMPLATE_CONTEXT_PROCESSORS")
+            log_request_not_found()
             return ''
         label = self.nodelist.render(context)
         try:
@@ -198,17 +210,11 @@ def breadcrumb_for(parser, token):
 
 
 @register.simple_tag(takes_context=True)
+@requires_request
 def clear_breadcrumbs(context, *args):
     """
     Removes all currently added breadcrumbs.
     """
-    if 'request' not in context:
-        logger.error("request object not found in context! Check if "
-                     "'django.core.context_processors.request' is in "
-                     "TEMPLATE_CONTEXT_PROCESSORS")
-        return ''
 
-    if CONTEXT_KEY in context['request'].META:
-        del context['request'].META[CONTEXT_KEY]
-
+    context['request'].META.pop(CONTEXT_KEY, None)
     return ''

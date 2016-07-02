@@ -20,7 +20,7 @@ Requirements
 
 * Python >=2.6 (>=3.0 supported since 0.6.1, requires Django >=1.5)
 * Django >= 1.4
-* Bootstrap 2.3 or 3.0
+* Bootstrap 2.3, 3 or 4
 
 Installation
 ============
@@ -43,7 +43,7 @@ After that make necessary changes to Django settings::
 Declaring breadcrumbs
 =====================
 
-There are currently three tags for adding breadcrumbs for pages (remeber to use the tags inside a ``{% block %}``):
+There are currently three tags for adding breadcrumbs for pages (remember to use the tags inside a ``{% block %}``):
 
 ``{% breadcrumb %}``
 ~~~~~~~~~~~~~~~~~~~~
@@ -102,7 +102,7 @@ Example::
 By default breadcrumbs labels are translated using gettext, if the translation should be skipped ``{% breadcrumb_raw %}`` can be used (the label is still escaped). Available since 0.7.0 release.
 
 ``{% breadcrumb_raw_safe %}``
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the label should neither be escaped nor translated ``{% breadcrumb_raw_safe %}`` can be used. Available since 0.7.0 release.
 
@@ -314,3 +314,4 @@ Contributors:
 * Guillaume DE BURE (gdebure)
 * JeLoueMonCampingCar
 * JP-Ellis
+* Alexandre Macabies (zopieux)
