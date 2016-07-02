@@ -314,3 +314,4 @@ Contributors:
 * Guillaume DE BURE (gdebure)
 * JeLoueMonCampingCar
 * JP-Ellis
+* Alexandre Macabies (zopieux)
