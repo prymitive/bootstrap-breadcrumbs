@@ -202,8 +202,9 @@ class Actor(Model):
         app_label = 'test_app'
 
 
-@override_settings(INSTALLED_APPS=['django', 'django_bootstrap_breadcrumbs',
-                                   'tests'])
+@override_settings(
+    INSTALLED_APPS=['django', 'django_bootstrap_breadcrumbs', 'tests'],
+    BACKEND='django.template.backends.django.DjangoTemplates')
 class SiteTests(TestCase):
 
     def setUp(self):
