@@ -206,7 +206,7 @@ class Actor(Model):
     INSTALLED_APPS=['django', 'django_bootstrap_breadcrumbs', 'tests'],
     TEMPLATES=[{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                 'APP_DIRS': True}],
-    ROOT_URLCONF='urls'
+    ROOT_URLCONF='tests.urls'
     )
 class SiteTests(TestCase):
 
