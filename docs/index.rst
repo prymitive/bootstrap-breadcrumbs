@@ -38,7 +38,8 @@ Or clone it from github::
 After that make necessary changes to Django settings::
 
    * add "django_bootstrap_breadcrumbs" to INSTALLED_APPS.
-   * make sure that TEMPLATE_CONTEXT_PROCESSORS contains "django.core.context_processors.request".
+   * make sure that TEMPLATE_CONTEXT_PROCESSORS contains "django.core.context_processors.request" (for Django < 1.10)
+   * make sure that TEMPLATES->OPTIONS->context_processors contains "django.template.context_processors.request" (for Django >= 1.10)
 
 Declaring breadcrumbs
 =====================
