@@ -13,7 +13,7 @@ from django import VERSION
 
 
 if VERSION < (1, 8):  # pragma: nocover
-    from django import patterns
+    from django.conf.urls import patterns
     nsurlpatters = patterns(
         '',
         url(r'^login2$', 'django.contrib.auth.views.login', name='login2_url'),
