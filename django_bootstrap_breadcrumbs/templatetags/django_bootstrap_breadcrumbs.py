@@ -18,7 +18,7 @@ from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django.conf import settings
-from django import template
+from django import template, VERSION
 from six import wraps
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,6 @@ CONTEXT_KEY = 'DJANGO_BREADCRUMB_LINKS'
 
 
 def log_request_not_found():
-    from django import VERSION
     if VERSION < (1, 8):  # pragma: nocover
         logger.error("request object not found in context! Check if "
                      "'django.core.context_processors.request' is in "
@@ -145,10 +144,16 @@ def render_breadcrumbs(context, *args):
 
     if not links:
         return ''
+
+    if VERSION > (1, 8):  # pragma: nocover
+        # RequestContext is deprecated in recent django
+        # https://docs.djangoproject.com/en/1.10/ref/templates/upgrading/
+        context = context.flatten()
+
     context['breadcrumbs'] = links
     context['breadcrumbs_total'] = len(links)
-    return mark_safe(template.loader.render_to_string(
-        template_path, context))
+
+    return mark_safe(template.loader.render_to_string(template_path, context))
 
 
 class BreadcrumbNode(template.Node):
