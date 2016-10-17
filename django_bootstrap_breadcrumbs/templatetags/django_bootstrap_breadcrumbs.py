@@ -4,22 +4,21 @@
     :contact: l.mierzwa@gmail.com
 """
 
-
 from __future__ import unicode_literals
 
 import logging
 from inspect import ismethod
 
+from django import template
+from django.conf import settings
 from django.core.urlresolvers import (reverse, resolve, NoReverseMatch,
                                       Resolver404)
+from django.db.models import Model
+from django.utils.encoding import smart_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.encoding import smart_text
+from django.utils.six import wraps
 from django.utils.translation import ugettext as _
-from django.db.models import Model
-from django.conf import settings
-from django import template
-from six import wraps
 
 logger = logging.getLogger(__name__)
 

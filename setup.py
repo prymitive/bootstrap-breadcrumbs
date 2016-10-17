@@ -22,9 +22,6 @@ setup(
     author='Łukasz Mierzwa',
     author_email='l.mierzwa@gmail.com',
     packages=find_packages(exclude=['tests']),
-    install_requires=[
-        'six',
-    ],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
