@@ -283,6 +283,7 @@ Result::
 Changelog
 =========
 
+* 0.8.2 - no code changes since 0.8.1
 * 0.8.1 - ``{% render_breadcrumbs %}`` will now pass context as dict for Django >= 1.8 since ``RequestContext()`` was deprecated (https://docs.djangoproject.com/en/1.10/ref/templates/upgrading/)
 * 0.8   - lots of cleanups and improvements by Alexandre Macabies (zopieux)
 * 0.7.3 - added bootstrap v4 template (JP-Ellis)
