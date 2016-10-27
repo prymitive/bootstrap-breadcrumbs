@@ -1,5 +1,5 @@
-pytest==2.9.2
+pytest==3.0.3
 pytest-pep8==1.0.6
-coverage==4.1
-python-coveralls==2.7.0
+coverage==4.2
+python-coveralls==2.9.0
 testfixtures
