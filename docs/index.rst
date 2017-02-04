@@ -191,7 +191,7 @@ Starting with 0.7.3 there's also V4 template::
 
 Starting with 0.7.1 it's possible to set default template path in settings.py using BREADCRUMBS_TEMPLATE='/my/template.html'::
 
-    BREADCRUMBS_TEMPLATE = ""django_bootstrap_breadcrumbs/bootstrap4.html""
+    BREADCRUMBS_TEMPLATE = "django_bootstrap_breadcrumbs/bootstrap4.html"
 
 Passing template path to ``{% render_breadcrumbs %}`` takes precedence over BREADCRUMBS_TEMPLATE.
 
