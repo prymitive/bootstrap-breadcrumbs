@@ -1,11 +1,23 @@
-<ul class="breadcrumb">
+<ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
     {% for url, label in breadcrumbs %}
-        <li{% ifequal forloop.counter breadcrumbs_total %} class="active"{% endifequal %}>
+        <li{% ifequal forloop.counter breadcrumbs_total %} class="active"{% endifequal %}
+            itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             {% if url and forloop.counter != breadcrumbs_total %}
-                <a href="{{ url }}">{{ label|safe }}</a>
+                <a itemscope itemtype="http://schema.org/Thing"
+                    itemprop="item" href="{{ url }}">
+                    <span itemprop="name">
+                        {{ label|safe }}
+                    </span>
+                </a>
             {% else %}
+                <span itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                    <span itemprop="name">
+                        {{ label|safe }}
+                    </span>
+                </span>
                 {{ label|safe }}
             {% endif %}
+            <meta itemprop="position" content="{{ forloop.counter }}" />
         </li>
     {% endfor %}
 </ul>

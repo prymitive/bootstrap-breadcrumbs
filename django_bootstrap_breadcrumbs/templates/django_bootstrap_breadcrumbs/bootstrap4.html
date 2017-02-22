@@ -1,9 +1,21 @@
-<nav class="breadcrumb">
+<nav class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
   {% for url, label in breadcrumbs %}
     {% if not url or forloop.counter == breadcrumbs_total %}
-      <span class="breadcrumb-item{% if forloop.counter == breadcrumbs_total %} active{% endif %}">{{ label|safe }}</span>
+      <span class="breadcrumb-item{% if forloop.counter == breadcrumbs_total %} active{% endif %}"
+        itemprop="itemListElement" itemscope
+        itemtype="http://schema.org/ListItem">
+        <span itemprop="name">
+          {{ label|safe }}
+        </span>
+      </span>
     {% else %}
-      <a class="breadcrumb-item" href="{{ url }}">{{ label|safe }}</a>
+      <a class="breadcrumb-item" href="{{ url }}" itemprop="itemListElement" itemscope
+      itemtype="http://schema.org/ListItem">
+        <span itemprop="name">
+          {{ label|safe }}
+        </span>
+      </a>
     {% endif %}
+      <meta itemprop="position" content="{{ forloop.counter }}" />
   {% endfor %}
 </nav>
