@@ -203,8 +203,15 @@ class Actor(Model):
 
 
 @override_settings(
-    INSTALLED_APPS=['django', 'django.contrib.auth',
-                    'django_bootstrap_breadcrumbs', 'tests'],
+    INSTALLED_APPS=['django',
+                    'django.contrib.admin',
+                    'django.contrib.auth',
+                    'django.contrib.contenttypes',
+                    'django.contrib.sessions',
+                    'django.contrib.messages',
+                    'django.contrib.staticfiles',
+                    'django_bootstrap_breadcrumbs',
+                    'tests'],
     TEMPLATES=[{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                 'APP_DIRS': True}]
     )
