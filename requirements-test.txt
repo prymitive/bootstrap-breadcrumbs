@@ -1,6 +1,5 @@
 pytest==3.0.3
 pytest-pep8==1.0.6
-coverage==4.2
-python-coveralls==2.9.0
+pytest-cov
 testfixtures
 codecov
