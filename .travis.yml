@@ -10,9 +10,12 @@ python:
   - "3.6"
 
 env:
-  - DJANGO=1.8.18
-  - DJANGO=1.10.7
-  - DJANGO=1.11
+  global:
+    - secure: "ddpJ80hapY19xudhnHECEVbbfM+nc9UROV8nBgTdQmM9jRH8OD+29U0i0af4/Zz+9IJ2pffY5sPkUHQIQyNcnMp0xZM8ErAwcrhknnVFzjcHcuhSzfstB3l13D9qHPuD3/IdpnRRCDUwZ0a7IJwsrbk4n9CmAEV3PwNkRz3nlOo="
+  matrix:
+    - DJANGO=1.8.18
+    - DJANGO=1.10.7
+    - DJANGO=1.11
 
 matrix:
   exclude:
@@ -33,5 +36,4 @@ script:
   - py.test -v --pep8 --cov-report xml --cov=django_bootstrap_breadcrumbs
 
 after_success:
-  secure:
-    "dnIPWZXd1gBHUtEulOaqR9bcAB37pKtLnaz7fkrfEoGLrPvDCjkIdmcEK2ac5R3WL1mfVNzno1wUrjs6khXBmaICfRaryQMF9qTevsIa+rZdWdck0F6mqDqJIKnsStVSa97/6r6p6Pg0jgxr0OudpxFu2OO7hDbppXDHdtrk0kM="
+  - python-codacy-coverage -r coverage.xml
