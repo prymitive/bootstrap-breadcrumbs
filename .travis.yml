@@ -30,7 +30,7 @@ install:
   - pip install -Ur requirements-test.txt
 
 script:
-  - py.test -v --pep8 --cov=django_bootstrap_breadcrumbs
+  - py.test -v --pep8 --cov-report xml --cov=django_bootstrap_breadcrumbs
 
 after_success:
-  - codecov
+  - secure: "dnIPWZXd1gBHUtEulOaqR9bcAB37pKtLnaz7fkrfEoGLrPvDCjkIdmcEK2ac5R3WL1mfVNzno1wUrjs6khXBmaICfRaryQMF9qTevsIa+rZdWdck0F6mqDqJIKnsStVSa97/6r6p6Pg0jgxr0OudpxFu2OO7hDbppXDHdtrk0kM="
