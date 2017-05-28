@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y python3-dev pyt
 
 RUN mkdir /src
 
-COPY requirements*.txt MANIFEST.in setup.py .coveragerc conftest.py /src/
+COPY requirements*.txt MANIFEST.in setup.py conftest.py /src/
 
 RUN pip3 install six
 RUN pip3 install -r /src/requirements-test.txt
