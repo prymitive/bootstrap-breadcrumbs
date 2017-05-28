@@ -1,6 +1,10 @@
 FROM debian:jessie
 
-RUN apt-get update && apt-get install -y python3-dev python3-pip libyaml-dev && apt-get clean
+LABEL maintainer "Łukasz Mierzwa <l.mierzwa@gmail.com>"
+
+RUN apt-get update && apt-get install --no-install-recommends -y python3-dev python3-pip libyaml-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /src
 
@@ -14,9 +18,9 @@ COPY tests /src/tests
 COPY django_bootstrap_breadcrumbs /src/django_bootstrap_breadcrumbs
 
 ARG DJANGO=
-RUN pip3 install django${DJANGO}
+RUN pip3 install "django${DJANGO}"
 
-RUN cd /src && python3 setup.py develop
+RUN (cd /src && python3 setup.py develop)
 
 RUN pip3 freeze | grep -i django
-RUN cd /src && coverage run --rcfile=.coveragerc `which py.test` -v -s --pep8 && coverage report -m
+RUN (cd /src && py.test -v --pep8 --cov=django_bootstrap_breadcrumbs)
