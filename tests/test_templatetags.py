@@ -198,6 +198,12 @@ class Actor(Model):
             return '/actor/%s' % kwargs['id']
         return '/actor'
 
+    def __str__(self):
+        # was changed to:
+        # return '%s object (%s)' % (self.__class__.__name__, self.pk)
+        # in Django 2.0, keep old format for test compatibility
+        return '%s object' % self.__class__.__name__
+
     class Meta:
         app_label = 'test_app'
 
@@ -320,6 +326,7 @@ class SiteTests(TestCase):
     def test_render(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/">&lt;</a>' in resp)
         self.assertTrue('<a href="/login">Login</a>' in resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
@@ -331,6 +338,7 @@ class SiteTests(TestCase):
     def test_render_safe(self):
         t = Template(T_LOAD + T_BLOCK_SAFE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/"><&></a>' in resp)
         self.assertTrue('<span><></span>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
@@ -339,6 +347,7 @@ class SiteTests(TestCase):
     def test_render_bs3(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS3)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/">&lt;</a>' in resp)
         self.assertTrue('<a href="/login">Login</a>' in resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
@@ -350,6 +359,7 @@ class SiteTests(TestCase):
     def test_render_bs4(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS4)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
         self.assertTrue('<a class="breadcrumb-item" href="/login">'
                         'Login</a>' in resp)
@@ -366,6 +376,7 @@ class SiteTests(TestCase):
     def test_render_bs3_using_settings(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/">&lt;</a>' in resp)
         self.assertTrue('<a href="/login">Login</a>' in resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
@@ -379,6 +390,7 @@ class SiteTests(TestCase):
     def test_render_bs4_using_settings(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
         self.assertTrue('<a class="breadcrumb-item" href="/login">'
                         'Login</a>' in resp)
@@ -393,6 +405,7 @@ class SiteTests(TestCase):
     def test_render_breadcrumb_for(self):
         t = Template(T_LOAD + T_BLOCK_FOR + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/static"><span>Static</span></a>' in resp)
         self.assertTrue('Actor' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
@@ -401,6 +414,7 @@ class SiteTests(TestCase):
     def test_render_breadcrumb_for_variable(self):
         t = Template(T_LOAD + T_BLOCK_FOR_VAR + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="nonexisting">404</a>' in resp)
         self.assertTrue('<a href="/login/Actor">Login Act</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
@@ -409,12 +423,14 @@ class SiteTests(TestCase):
     def test_render_breadcrumb_kwargs(self):
         t = Template(T_LOAD + T_BLOCK_KWARGS + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/login/user/12345">User 12345</a>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
 
     def test_render_breadcrumb_for_kwargs(self):
         t = Template(T_LOAD + T_BLOCK_FOR_KWARGS + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/login/user/dummyarg">KV</a>' in resp)
         self.assertTrue('<a href="/login/user/Actor"></a>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 3)
@@ -422,6 +438,7 @@ class SiteTests(TestCase):
     def test_render_breadcrumb_kwargs_model(self):
         t = Template(T_LOAD + T_BLOCK_KWARGS_MODEL + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/actor">Actor object</a>' in resp)
         self.assertTrue('<a href="/actor/12345">Actor object</a>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 3)
@@ -429,6 +446,7 @@ class SiteTests(TestCase):
     def test_render_breadcrumb_for_kwargs_model(self):
         t = Template(T_LOAD + T_BLOCK_FOR_KWARGS_MODEL + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/actor">actor</a>' in resp)
         self.assertTrue('<a href="/actor/Actor">actor</a>' in resp)
         self.assertTrue(
@@ -438,6 +456,7 @@ class SiteTests(TestCase):
     def test_render_ns(self):
         t = Template(T_LOAD + T_BLOCK_NS + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
@@ -446,6 +465,7 @@ class SiteTests(TestCase):
         self.context['request'].path = '/login'
         t = Template(T_LOAD + T_BLOCK_NS + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
@@ -453,6 +473,7 @@ class SiteTests(TestCase):
     def test_render_ns_breadcrumb_for(self):
         t = Template(T_LOAD + T_BLOCK_NS_FOR + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/static"><span>Static</span></a>' in resp)
         self.assertTrue('<a href="/ns/login2">Login2</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
@@ -461,6 +482,7 @@ class SiteTests(TestCase):
     def test_render_ns_breadcrumb_for_quotes(self):
         t = Template(T_LOAD + T_BLOCK_NS_FOR_QUOTES + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('<a href="/ns/login2">Login2a</a>' in resp)
         self.assertTrue('<a href="/ns/login2">Login2b</a>' in resp)
         self.assertTrue('<span class="divider">/</span>' in resp)
@@ -469,12 +491,14 @@ class SiteTests(TestCase):
     def test_render_escape(self):
         t = Template(T_LOAD + T_BLOCK_ESCAPE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertTrue('&lt;span&gt;John&lt;/span&gt;' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 2)
 
     def test_render_cleared(self):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE_CLEAR + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
+        print(resp)
         self.assertFalse('<a href="/">Home</a>' in resp)
         self.assertFalse('<a href="/login">Login</a>' in resp)
         self.assertFalse('<a href="/actor">Actor object</a>' in resp)
