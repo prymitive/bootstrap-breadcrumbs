@@ -8,12 +8,11 @@
 from __future__ import unicode_literals
 
 import django.contrib.auth.views
-from django.conf.urls import url, include
 from django import VERSION
 
 
 if VERSION < (1, 8):  # pragma: nocover
-    from django.conf.urls import patterns
+    from django.conf.urls import url, include, patterns
     nsurlpatters = patterns(
         '',
         url(r'^login2$', 'django.contrib.auth.views.login', name='login2_url'),
@@ -29,7 +28,8 @@ if VERSION < (1, 8):  # pragma: nocover
             name='login_kwargs_url'),
         (r'^ns/', include(nsurlpatters, namespace='ns')),
     )
-else:
+elif VERSION < (2, 0):
+    from django.conf.urls import url, include
     nsurlpatters = [
         url(r'^login2$', django.contrib.auth.views.login, name='login2_url'),
     ]
@@ -41,4 +41,18 @@ else:
         url(r'^login/user/(?P<user_id>\S+)$', django.contrib.auth.views.login,
             name='login_kwargs_url'),
         url(r'^ns/', include(nsurlpatters, namespace='ns')),
+    ]
+else:
+    from django.urls import include, path, re_path
+    nsurlpatters = [
+        path('login2', django.contrib.auth.views.login, name='login2_url'),
+    ]
+
+    urlpatterns = [
+        path('login', django.contrib.auth.views.login, name='login_url'),
+        re_path(r'^login/(?P<slug>[-_\w]+)$', django.contrib.auth.views.login,
+                name='login_args_url'),
+        re_path(r'^login/user/(?P<user_id>\S+)$',
+                django.contrib.auth.views.login, name='login_kwargs_url'),
+        path('ns/', include((nsurlpatters, 'ns'), namespace='ns')),
     ]
