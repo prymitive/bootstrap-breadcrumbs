@@ -44,3 +44,12 @@ script:
 
 after_success:
   - python-codacy-coverage -r coverage.xml
+
+deploy:
+  provider: pypi
+  user: prymitive
+  password:
+    secure: AG4XNHGS0WlieYF+QviYA0k/Q9cLQQl2m53rKu3YjTE4r9uKR6ffAphm7fTNu7YS5dvfDIAGIrX60wM4Z9gm1mOWEBY8/LAjLDsCEN4myoUgVZXLtrEmzUUvyph8hBHw4OKJX17i36HUTFdEKrkWRti/zumpQoDcFhr1D8m37f4=
+  on:
+    tags: true
+  distributions: sdist bdist_wheel
