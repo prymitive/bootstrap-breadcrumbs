@@ -15,7 +15,7 @@ env:
   global:
     - secure: "ddpJ80hapY19xudhnHECEVbbfM+nc9UROV8nBgTdQmM9jRH8OD+29U0i0af4/Zz+9IJ2pffY5sPkUHQIQyNcnMp0xZM8ErAwcrhknnVFzjcHcuhSzfstB3l13D9qHPuD3/IdpnRRCDUwZ0a7IJwsrbk4n9CmAEV3PwNkRz3nlOo="
   matrix:
-    - DJANGO=2.0rc1
+    - DJANGO=2.0
     - DJANGO=1.8.18
     - DJANGO=1.10.7
     - DJANGO=1.11
@@ -23,13 +23,13 @@ env:
 matrix:
   exclude:
     - python: "2.7"
-      env: DJANGO=2.0rc1
+      env: DJANGO=2.0
     - python: "3.3"
       env: DJANGO=1.10.7
     - python: "3.3"
       env: DJANGO=1.11
     - python: "3.3"
-      env: DJANGO=2.0rc1
+      env: DJANGO=2.0
     - python: "3.6"
       env: DJANGO=1.8.18
     - python: "3.6"
