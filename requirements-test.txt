@@ -4,3 +4,7 @@ pytest-cov
 testfixtures
 codacy-coverage
 six
+codeclimate-test-reporter
+
+# https://bitbucket.org/ned/coveragepy/issues/578/incomplete-file-path-in-xml-report
+coverage>=4.0,<4.4
