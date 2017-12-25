@@ -1,11 +1,14 @@
-<ul class="breadcrumb">
+<ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
     {% for url, label in breadcrumbs %}
-        <li>
+        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             {% if url and forloop.counter != breadcrumbs_total %}
-                <a href="{{ url }}">{{ label|safe }}</a>
+                <a href="{{ url }}">
+                    {{ label|safe }}
+                </a>
             {% else %}
                 {{ label|safe }}
             {% endif %}
+            <meta itemprop="position" content="{{ forloop.counter }}" />
             {% if not forloop.last %}
                 <span class="divider">/</span>
             {% endif %}
