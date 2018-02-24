@@ -300,10 +300,9 @@ class SiteTests(TestCase):
     def test_render_empty_url_bs4(self):
         t = Template(T_LOAD + T_BLOCK_EMPTY_URL + T_BLOCK_RENDER_BS4)
         self.assertHTMLEqual(t.render(self.context),
-                             '<div><nav class="breadcrumb">'
-                             '<span class="breadcrumb-item">Home For</span>'
-                             '<span class="breadcrumb-item active">Home</span>'
-                             '</nav></div>')
+                             '<div><nav aria-label="breadcrumb"><ol class="breadcrumb">'
+                             '<li class="breadcrumb-item active aria-current="page">Home</span>'
+                             '</ol></nav></div>')
 
     def test_render_empty_breadcrumbs_bs2(self):
         t = Template(T_LOAD + T_BLOCK_RENDER_BS2)
@@ -360,15 +359,11 @@ class SiteTests(TestCase):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS4)
         resp = t.render(self.context)
         print(resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/login">'
-                        'Login</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/actor">'
-                        'Actor object</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/users">'
-                        'Users and groups</a>' in resp)
-        self.assertTrue('<span class="breadcrumb-item active"><span>'
-                        'John</span></span>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/">&lt;</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/login">Login</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/actor">Actor object</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/users">Users and groups</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item active aria-current="page">John</li>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
     @override_settings(
@@ -391,15 +386,11 @@ class SiteTests(TestCase):
         t = Template(T_LOAD + T_BLOCK_USER_SAFE + T_BLOCK_RENDER_BS2)
         resp = t.render(self.context)
         print(resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/">&lt;</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/login">'
-                        'Login</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/actor">'
-                        'Actor object</a>' in resp)
-        self.assertTrue('<a class="breadcrumb-item" href="/users">'
-                        'Users and groups</a>' in resp)
-        self.assertTrue('<span class="breadcrumb-item active"><span>'
-                        'John</span></span>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/">&lt;</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/login">Login</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/actor">Actor object</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item"><a href="/users">Users and groups</a></li>' in resp)
+        self.assertTrue('<li class="breadcrumb-item active aria-current="page">John</li>' in resp)
         self.assertEqual(len(self.request.META['DJANGO_BREADCRUMB_LINKS']), 5)
 
     def test_render_breadcrumb_for(self):
