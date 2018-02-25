@@ -38,7 +38,7 @@ install:
   - pip install -Ur requirements-test.txt
 
 script:
-  - py.test -v --pep8 --cov=django_bootstrap_breadcrumbs
+  - py.test -v --pep8 --cov=django_bootstrap_breadcrumbs --cov-report=term-missing
 
 deploy:
   provider: pypi
