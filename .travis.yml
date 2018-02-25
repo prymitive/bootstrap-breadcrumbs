@@ -12,11 +12,6 @@ python:
   - "3.6"
 
 env:
-  global:
-    # codacy
-    - secure: "ddpJ80hapY19xudhnHECEVbbfM+nc9UROV8nBgTdQmM9jRH8OD+29U0i0af4/Zz+9IJ2pffY5sPkUHQIQyNcnMp0xZM8ErAwcrhknnVFzjcHcuhSzfstB3l13D9qHPuD3/IdpnRRCDUwZ0a7IJwsrbk4n9CmAEV3PwNkRz3nlOo="
-    # codeclimate
-    - secure: "XjgF2GfhNPjCU5kV05OB1Bevn4A9JCOq0LDmjSRhE5e/jZO+TqOcEQ5eoXN/N73ttAi66hsEUS7dI3xNydIzJGtB3X0UiPPG/bk+tQ8/gPa0sXSNUnG7lI3Ks/0b3OYaJgbxD3K9CHHuax3l3VDKeYazJMkMaYYC34Kp3zaGwFU="
   matrix:
     - DJANGO=2.0
     - DJANGO=1.8.18
@@ -43,11 +38,7 @@ install:
   - pip install -Ur requirements-test.txt
 
 script:
-  - py.test -v --pep8 --cov-report xml --cov=django_bootstrap_breadcrumbs
-
-after_success:
-  - python-codacy-coverage -r coverage.xml
-  - codeclimate-test-reporter
+  - py.test -v --pep8 --cov=django_bootstrap_breadcrumbs
 
 deploy:
   provider: pypi
