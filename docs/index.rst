@@ -283,6 +283,7 @@ Result::
 Changelog
 =========
 
+* 0.9.1 - updated ``bootstrap4.html`` template to match Bootstrap 4.0 final release syntax (@ozeranskiy)
 * 0.9.0 - added support for Django 2.0
 * 0.8.2 - no code changes since 0.8.1
 * 0.8.1 - ``{% render_breadcrumbs %}`` will now pass context as dict for Django >= 1.8 since ``RequestContext()`` was deprecated (https://docs.djangoproject.com/en/1.10/ref/templates/upgrading/)
@@ -320,3 +321,4 @@ Contributors:
 * JeLoueMonCampingCar
 * JP-Ellis
 * Alexandre Macabies (zopieux)
+* ozeranskiy
