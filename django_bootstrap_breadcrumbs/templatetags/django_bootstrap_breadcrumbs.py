@@ -13,11 +13,15 @@ from inspect import ismethod
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.encoding import smart_text
-from django.utils.translation import ugettext as _
 from django.db.models import Model
 from django.conf import settings
 from django import template, VERSION
 from six import wraps
+
+if VERSION >= (3, 0):
+    from django.utils.translation import gettext as _
+else:
+    from django.utils.translation import ugettext as _
 
 if VERSION >= (2, 0):
     from django.urls import (reverse, resolve, NoReverseMatch, Resolver404)

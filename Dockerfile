@@ -1,8 +1,8 @@
-FROM debian:jessie
+FROM debian:stable
 
 LABEL maintainer "Łukasz Mierzwa <l.mierzwa@gmail.com>"
 
-RUN apt-get update && apt-get install --no-install-recommends -y python3-dev python3-pip libyaml-dev git \
+RUN apt-get update && apt-get install --no-install-recommends -y python3-dev python3-pip python3-setuptools libyaml-dev git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
