@@ -283,6 +283,7 @@ Result::
 Changelog
 =========
 
+* 0.9.2 - updated ugettext imports for Django 3.0
 * 0.9.1 - updated ``bootstrap4.html`` template to match Bootstrap 4.0 final release syntax (@ozeranskiy)
 * 0.9.0 - added support for Django 2.0
 * 0.8.2 - no code changes since 0.8.1
