@@ -12,7 +12,7 @@ from inspect import ismethod
 
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 from django.db.models import Model
 from django.conf import settings
 from django import template, VERSION
@@ -148,7 +148,7 @@ def render_breadcrumbs(context, *args):
                               kwargs=view_kwargs, current_app=current_app)
             except NoReverseMatch:
                 url = viewname
-        links.append((url, smart_text(label) if label else label))
+        links.append((url, smart_str(label) if label else label))
 
     if not links:
         return ''
